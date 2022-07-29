@@ -1,0 +1,28 @@
+{"frames": {
+
+"day_ground.png":
+{
+	"frame": {"x":0,"y":0,"w":2400,"h":26},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":2400,"h":26},
+	"sourceSize": {"w":2400,"h":26}
+},
+"night_ground.png":
+{
+	"frame": {"x":0,"y":26,"w":2400,"h":26},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":2400,"h":26},
+	"sourceSize": {"w":2400,"h":26}
+}},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "ground.png",
+	"format": "RGBA8888",
+	"size": {"w":2400,"h":52},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:b94540a4b954fb83202a282f1fc880f0:b261ea673f47466e651f7fe0040fc278:7f047724e5c329af5e25380e12ef132f$"
+}
+}

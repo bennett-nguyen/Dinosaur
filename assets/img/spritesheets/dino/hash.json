@@ -1,0 +1,124 @@
+{"frames": {
+
+"day_blink.png":
+{
+	"frame": {"x":0,"y":0,"w":80,"h":86},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":80,"h":86},
+	"sourceSize": {"w":80,"h":86}
+},
+"day_dead.png":
+{
+	"frame": {"x":80,"y":0,"w":80,"h":86},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":80,"h":86},
+	"sourceSize": {"w":80,"h":86}
+},
+"day_dino_dodge_1.png":
+{
+	"frame": {"x":0,"y":172,"w":110,"h":52},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":110,"h":52},
+	"sourceSize": {"w":110,"h":52}
+},
+"day_dino_dodge_2.png":
+{
+	"frame": {"x":110,"y":172,"w":110,"h":52},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":110,"h":52},
+	"sourceSize": {"w":110,"h":52}
+},
+"day_idle.png":
+{
+	"frame": {"x":160,"y":0,"w":80,"h":86},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":80,"h":86},
+	"sourceSize": {"w":80,"h":86}
+},
+"day_running1.png":
+{
+	"frame": {"x":240,"y":0,"w":80,"h":86},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":80,"h":86},
+	"sourceSize": {"w":80,"h":86}
+},
+"day_running2.png":
+{
+	"frame": {"x":320,"y":0,"w":80,"h":86},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":80,"h":86},
+	"sourceSize": {"w":80,"h":86}
+},
+"night_blink.png":
+{
+	"frame": {"x":0,"y":86,"w":80,"h":86},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":80,"h":86},
+	"sourceSize": {"w":80,"h":86}
+},
+"night_dead.png":
+{
+	"frame": {"x":80,"y":86,"w":80,"h":86},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":80,"h":86},
+	"sourceSize": {"w":80,"h":86}
+},
+"night_dino_dodge_1.png":
+{
+	"frame": {"x":220,"y":172,"w":110,"h":52},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":110,"h":52},
+	"sourceSize": {"w":110,"h":52}
+},
+"night_dino_dodge_2.png":
+{
+	"frame": {"x":330,"y":172,"w":110,"h":52},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":110,"h":52},
+	"sourceSize": {"w":110,"h":52}
+},
+"night_idle.png":
+{
+	"frame": {"x":160,"y":86,"w":80,"h":86},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":80,"h":86},
+	"sourceSize": {"w":80,"h":86}
+},
+"night_running1.png":
+{
+	"frame": {"x":240,"y":86,"w":80,"h":86},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":80,"h":86},
+	"sourceSize": {"w":80,"h":86}
+},
+"night_running2.png":
+{
+	"frame": {"x":320,"y":86,"w":80,"h":86},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":80,"h":86},
+	"sourceSize": {"w":80,"h":86}
+}},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "dinosaur.png",
+	"format": "RGBA8888",
+	"size": {"w":440,"h":224},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:430ee38a044dcb17e77c63693ef279fa:a6221d55ccf2aba6b8b07dd9ab079b7a:44f554f8211ffb19be140ef2122c87a1$"
+}
+}
