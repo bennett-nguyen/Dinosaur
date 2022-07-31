@@ -1,14 +1,13 @@
 import pygame as pg
 import src.preload.ds as ds
-from src.preload.shared import shared_data
 import src.preload.assets as assets
 import src.preload.constant as const
+from src.preload.shared import shared_data
 
 class Dino:
     def __init__(self, ground_rect: pg.Rect):
         self.ground_rect = ground_rect
         self.ground_pos = self.ground_rect.top + const.DINO_POS_Y_OFFSET
-        self.time_state = 'day'
         self.player_state = 'idle' # 'idle', 'running', 'jump', 'dodge', 'dead'
         self.gravity = 0
         self.gravity_incrementer = 2
@@ -32,13 +31,13 @@ class Dino:
         self.current_time = 0
         self.blink_activated_time = 0
         self.is_blinking = False
-        self.blink_delay = 5000
+        self.blink_delay = 7000
         self.blinking_time = 200
 
         # running & dodge
         self.index = 0
-        self.velocity = 10
-        self.speed = 0.2
+        self.velocity = const.DINO_VELOCITY
+        self.animation_speed = 10
         self.is_dodging = False
 
         # jump
@@ -48,8 +47,8 @@ class Dino:
         ds.screen.blit(self.image.current, self.current_rect)
     
     def get_obj_state(self):
-        self.image.get_state(self.time_state)
-    
+        self.image.get_state(shared_data.time_state)
+
     def input(self):
         for event in shared_data.events:
             if event.type == pg.KEYDOWN:
@@ -110,14 +109,14 @@ class Dino:
         self.player_state = 'running'
 
     def _running_animation(self):
-        self.index += self.speed
+        self.index += self.animation_speed * shared_data.dt
         if self.index >= len(self.dino_running):
             self.index = 0
 
         self.image = self.dino_running[int(self.index)]
     
     def _dodge_animation(self):
-        self.index += self.speed
+        self.index += self.animation_speed * shared_data.dt
         if self.index >= len(self.dino_running):
             self.index = 0
 
