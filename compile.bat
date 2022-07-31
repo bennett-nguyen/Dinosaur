@@ -23,7 +23,7 @@ chcp 65001
 :: #======================================================================#
 
 python -m pip install -r requirement.txt
-python -m PyInstaller --onefile -w entry.py
+python -m PyInstaller --onefile -w -i="./assets/img/icon/dino.ico" entry.py
 copy .\dist\entry.exe .\dist\..
 @RD /S /Q "./build"
 @RD /S /Q "./dist"
