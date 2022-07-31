@@ -2,13 +2,12 @@ import time
 import pygame as pg
 import src.preload.ds as ds
 import src.preload.constant as const
-from src.preload.shared import shared_data
 
 from sys import exit
 from src.comp.scene.game import Game
+from src.preload.shared import shared_data
 
 main_game = Game()
-
 
 dt = 0
 current = 0
@@ -22,7 +21,7 @@ while True:
     main_game.apply_color()
     ds.clock.tick(const.FPS)
 
-    events = list(pg.event.get())
+    events = pg.event.get()
     shared_data.events = events
     shared_data.dt = dt
 
