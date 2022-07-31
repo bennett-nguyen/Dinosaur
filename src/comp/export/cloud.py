@@ -19,4 +19,5 @@ class Cloud:
 
     def draw(self):
         if self.rect.left <= const.WIDTH:
+            self.image.get_state(shared_data.time_state)
             ds.screen.blit(self.image.current, self.rect)

@@ -5,8 +5,7 @@ import src.preload.constant as const
 from src.preload.shared import shared_data
 
 class Moon:
-    def __init__(self, time_state):
-        self.time_state = time_state
+    def __init__(self):
         self.alpha = const.MOON_ALPHA
         self.moon_stages_img = assets.Gallery.MOON
         self.stages = ('waxing-crescent', 'waxing-crescent-wider', 'first-quarter', 'full-moon', 'third-quarter', 'waning-crescent-wider', 'waning-crescent', 'new-moon')
@@ -23,9 +22,9 @@ class Moon:
         ds.screen.blit(self.surf, self.rect)
 
     def change_alpha(self):
-        if self.alpha > 0 and self.time_state == 'day':
+        if self.alpha > 0 and shared_data.time_state == 'day':
             self.alpha -= 5
-        elif self.alpha < const.MOON_ALPHA and self.time_state == 'night':
+        elif self.alpha < const.MOON_ALPHA and shared_data.time_state == 'night':
             self.alpha += 5
             self.alpha = min(self.alpha, const.MOON_ALPHA)
 
