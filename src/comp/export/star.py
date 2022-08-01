@@ -7,13 +7,15 @@ class Star:
     def __init__(self, image: pg.Surface, rect: pg.Rect):
         self.image = image
         self.rect = rect
-        self.alpha = const.STAR_ALPHA
+        self.alpha = const.STAR_ALPHA if shared_data.time_state == const.NIGHT else 0
+        self.alpha_modifier = 270
 
     def change_alpha(self):
-        if self.alpha > 0 and shared_data.time_state == 'day':
-            self.alpha -= 3
-        elif self.alpha < const.STAR_ALPHA and shared_data.time_state == 'night':
-            self.alpha += 3
+        modifier = round(self.alpha_modifier * shared_data.dt)
+        if self.alpha > 0 and shared_data.time_state == const.DAY:
+            self.alpha -= modifier
+        elif self.alpha < const.STAR_ALPHA and shared_data.time_state == const.NIGHT:
+            self.alpha += modifier
             self.alpha = min(self.alpha, const.STAR_ALPHA)
 
         self.image.set_alpha(self.alpha)
