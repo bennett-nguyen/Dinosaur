@@ -197,10 +197,10 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">img/dino/day_dino_dodge_1.png</key>
-            <key type="filename">img/dino/day_dino_dodge_2.png</key>
-            <key type="filename">img/dino/night_dino_dodge_1.png</key>
-            <key type="filename">img/dino/night_dino_dodge_2.png</key>
+            <key type="filename">img/dino/day_dino_duck_1.png</key>
+            <key type="filename">img/dino/day_dino_duck_2.png</key>
+            <key type="filename">img/dino/night_dino_duck_1.png</key>
+            <key type="filename">img/dino/night_dino_duck_2.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -220,18 +220,18 @@
         <array>
             <filename>img/dino/day_blink.png</filename>
             <filename>img/dino/day_dead.png</filename>
-            <filename>img/dino/day_dino_dodge_1.png</filename>
-            <filename>img/dino/day_dino_dodge_2.png</filename>
             <filename>img/dino/day_idle.png</filename>
             <filename>img/dino/day_running1.png</filename>
             <filename>img/dino/day_running2.png</filename>
             <filename>img/dino/night_blink.png</filename>
             <filename>img/dino/night_dead.png</filename>
-            <filename>img/dino/night_dino_dodge_1.png</filename>
-            <filename>img/dino/night_dino_dodge_2.png</filename>
             <filename>img/dino/night_idle.png</filename>
             <filename>img/dino/night_running1.png</filename>
             <filename>img/dino/night_running2.png</filename>
+            <filename>img/dino/night_dino_duck_1.png</filename>
+            <filename>img/dino/night_dino_duck_2.png</filename>
+            <filename>img/dino/day_dino_duck_1.png</filename>
+            <filename>img/dino/day_dino_duck_2.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
