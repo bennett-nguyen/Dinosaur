@@ -1,3 +1,5 @@
+import src.preload.constant as const
+
 class ImageState:
     def __init__(self, day_image, night_image):
         self.day_image = day_image
@@ -7,41 +9,16 @@ class ImageState:
 
     def get_state(self, code):
         match code:
-            case "day":
+            case const.DAY:
                 self.current = self.day_image
-            case "night":
+            case const.NIGHT:
                 self.current = self.night_image
-                
 
-# class Sprite:
-#     def __init__(self, width: int, height: int, color: tuple[int, int, int], transparent: bool, **kwargs):
-#         self.surface = pg.Surface((width, height))
-#         if transparent:
-#             self.surface = pg.Surface((width, height), 32, pg.SRCALPHA)
+BOOL_OPERATOR_LEQUAL = 0 # <=
+BOOL_OPERATOR_GEQUAL = 1 # >=
 
-#         self.surface.fill(color)
-        
-#         self.rect = self.surface.get_rect(**kwargs)
-    
-#     def draw_self(self):
-#         ds.screen.blit(self.surface, self.rect)
-    
-#     def get_image(self, image: pg.Surface):
-#         self.surface.blit(image)
-
-# class ImageAnimation:
-#     def __init__(self, images: tuple, speed: float, **kwargs):
-#         self.images = images
-#         self.index = 0
-#         self.speed = speed  # 0 -> 1 high speed == fast animation
-
-#         self.surf = self.images[self.index]
-#         self.rect = self.surf.get_rect(**kwargs)
-
-#     def toggle_animation(self):
-#         self.index += self.speed
-#         if self.index >= len(self.images):
-#             self.index = 0
-
-        # self.surf = self.images[int(self.index)]
-        # ds.screen.blit(self.surf, self.rect)
+def timer(current_time: float, static_point: float, length_of_timer: float, bool_operator: int) -> bool:
+    if bool_operator == BOOL_OPERATOR_GEQUAL:
+        return current_time - static_point >= length_of_timer
+    elif bool_operator == BOOL_OPERATOR_LEQUAL:
+        return current_time - static_point <= length_of_timer
