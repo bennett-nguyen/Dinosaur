@@ -3,6 +3,7 @@ import src.preload.ds as ds
 import src.preload.assets as assets
 import src.preload.constant as const
 from src.preload.assets import CustomFont
+from src.preload.comp import timer, BOOL_OPERATOR_GEQUAL
 
 class ScoreSys:
     def __init__(self, text_color: tuple[int, int, int]):
@@ -32,7 +33,7 @@ class ScoreSys:
         self.is_playing_animation = False
         self.milestone_text = None
 
-        self.score_text = self.font.render(f'{(self.score_length - len(str(self.score))) * "0"}{self.score}', True, self.current_color)
+        self.score_text = self.font.render(self.compute_visual(self.score), True, self.current_color)
         self.score_rect = self.score_text.get_rect(topright=(const.WIDTH - self.padding, 0 + self.padding))
         self.highest_score_text = self.font.render(f'HI {self.compute_visual(self.highest_score)}', True, self.current_color)
         rect_x, rect_y = self.score_rect.midleft
@@ -40,7 +41,7 @@ class ScoreSys:
 
     def increment_score(self):
         self.current_time = pg.time.get_ticks()
-        if self.current_time - self.incremented_score_time >= self.delay:
+        if timer(self.current_time, self.incremented_score_time, self.delay, BOOL_OPERATOR_GEQUAL):
             self.score += self.score_incrementer
 
             self.score_text = self.font.render(f'{self.compute_visual(self.score)}', True, self.current_color)
@@ -72,7 +73,7 @@ class ScoreSys:
         self.highest_score_text = self.font.render(f'HI {self.compute_visual(self.highest_score)}', True, self.current_color)
         self.score_text = self.font.render(self.compute_visual(self.score), True, self.current_color)
 
-    def compute_visual(self, score):
+    def compute_visual(self, score: int) -> str:
         prefix = ''
         if self.score_length - len(str(score)) > 0: 
             prefix = (self.score_length - len(str(score))) * "0"
@@ -80,16 +81,15 @@ class ScoreSys:
 
     def milestone_animation(self):
         self.animation_current_time = pg.time.get_ticks()
-        if self.current_time - self.activated_time >= self.animation_play_time:
+        if timer(self.current_time, self.activated_time, self.animation_play_time, BOOL_OPERATOR_GEQUAL):
             self.reached_milestone = False
             return
 
-        if self.animation_current_time - self.blink_time >= self.blink_delay and not self.is_blinking:
+        if timer(self.animation_current_time, self.blink_time, self.blink_delay, BOOL_OPERATOR_GEQUAL) and not self.is_blinking:
             self.is_blinking = True
             self.blink_time = pg.time.get_ticks()
             return
 
-
-        if self.animation_current_time - self.blink_time >= self.blink_delay:
+        if timer(self.animation_current_time, self.blink_time, self.blink_delay, BOOL_OPERATOR_GEQUAL):
             self.is_blinking = False
             self.blink_time = pg.time.get_ticks()

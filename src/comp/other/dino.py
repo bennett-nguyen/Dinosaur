@@ -3,18 +3,20 @@ import src.preload.ds as ds
 import src.preload.assets as assets
 import src.preload.constant as const
 from src.preload.shared import shared_data
+from src.preload.comp import timer, BOOL_OPERATOR_GEQUAL
 
 class Dino:
     def __init__(self, ground_rect: pg.Rect):
         self.ground_rect = ground_rect
         self.ground_pos = self.ground_rect.top + const.DINO_POS_Y_OFFSET
-        self.player_state = 'idle' # 'idle', 'running', 'jump', 'dodge', 'dead'
+        self.player_state = const.IDLE
         self.gravity = 0
+        self.default_gravity = -30
         self.gravity_incrementer = 2
 
         self.dino_idle = self.dino_jump = assets.Gallery.DINO_IDLE
-        self.dino_running = [assets.Gallery.DINO_RUNNING_1, assets.Gallery.DINO_RUNNING_2]
-        self.dino_dodge = [assets.Gallery.DINO_DODGE_1, assets.Gallery.DINO_DODGE_2]
+        self.dino_running = (assets.Gallery.DINO_RUNNING_1, assets.Gallery.DINO_RUNNING_2)
+        self.dino_duck = (assets.Gallery.DINO_DUCK_1, assets.Gallery.DINO_DUCK_2)
         self.dino_blink = assets.Gallery.DINO_BLINK
         self.dino_dead = assets.Gallery.DINO_DEAD
         
@@ -22,11 +24,11 @@ class Dino:
 
         self.fake_rect = self.image.current.get_rect(midbottom=(100, self.ground_pos)) # for dino transforming
         self.rect = self.image.current.get_rect(midbottom=(self.fake_rect.centerx + const.DINO_POS_X_OFFSET, self.ground_pos))
-        self.dodge_rect = self.dino_dodge[0].current.get_rect(midbottom=(self.rect.centerx + 10, self.ground_pos))
+        self.duck_rect = self.dino_duck[0].current.get_rect(midbottom=(self.rect.centerx + 10, self.ground_pos))
 
         self.current_rect = self.fake_rect
-        # Animation stuff
 
+        # -- Animation stuff
         # idle
         self.current_time = 0
         self.blink_activated_time = 0
@@ -42,10 +44,11 @@ class Dino:
 
         # jump
         self.is_jumping = False
+
     def redraw(self):
         self._check_player_state()
         ds.screen.blit(self.image.current, self.current_rect)
-    
+
     def get_obj_state(self):
         self.image.get_state(shared_data.time_state)
 
@@ -55,15 +58,15 @@ class Dino:
                 if event.key == pg.K_SPACE and self.current_rect.bottom >= self.ground_pos and not self.is_dodging:
                         assets.Audio.JUMP.play()
                         self.is_jumping = True
-                        self.player_state = 'jump'
-                        self.gravity = -40
+                        self.player_state = const.JUMP
+                        self.gravity = self.default_gravity
                 elif event.key == pg.K_DOWN:
                     if not self.is_jumping:
-                        self.player_state = 'dodge'
+                        self.player_state = const.DUCK
                         self.is_dodging = True
 
             if event.type == pg.KEYUP and event.key == pg.K_DOWN and not self.is_jumping:
-                self.player_state = 'running'
+                self.player_state = const.RUN
                 self.current_rect = self.rect
                 self.is_dodging = False
 
@@ -77,26 +80,26 @@ class Dino:
 
     def _check_player_state(self):
         match self.player_state:
-            case 'idle':
+            case const.IDLE:
                 if not self.blink_activated_time: self.blink_activated_time = pg.time.get_ticks()
                 self._idle_animation()
-            case 'jump':
+            case const.JUMP:
                 self._jump_animation()
-            case 'running':
+            case const.RUN:
                 self._running_animation()
-            case 'dodge':
-                self._dodge_animation()
-    
+            case const.DUCK:
+                self._duck_animation()
+
     def _idle_animation(self):
         self.current_time = pg.time.get_ticks()
-        
-        if self.current_time - self.blink_activated_time >= self.blink_delay and not self.is_blinking:
+
+        if timer(self.current_time, self.blink_activated_time, self.blink_delay, BOOL_OPERATOR_GEQUAL) and not self.is_blinking:
             self.is_blinking = True
             self.image = self.dino_blink
             self.blink_activated_time = self.current_time = pg.time.get_ticks()
             return
 
-        if self.current_time - self.blink_activated_time >= self.blinking_time and self.is_blinking:
+        if timer(self.current_time, self.blink_activated_time, self.blinking_time, BOOL_OPERATOR_GEQUAL) and self.is_blinking:
             self.is_blinking = False
             self.image = self.dino_idle
             self.blink_activated_time = self.current_time = pg.time.get_ticks()
@@ -106,7 +109,7 @@ class Dino:
             self.image = self.dino_jump
             return
 
-        self.player_state = 'running'
+        self.player_state = const.RUN
 
     def _running_animation(self):
         self.index += self.animation_speed * shared_data.dt
@@ -114,11 +117,11 @@ class Dino:
             self.index = 0
 
         self.image = self.dino_running[int(self.index)]
-    
-    def _dodge_animation(self):
+
+    def _duck_animation(self):
         self.index += self.animation_speed * shared_data.dt
         if self.index >= len(self.dino_running):
             self.index = 0
 
-        self.image = self.dino_dodge[int(self.index)]
-        self.current_rect = self.dodge_rect
+        self.image = self.dino_duck[int(self.index)]
+        self.current_rect = self.duck_rect

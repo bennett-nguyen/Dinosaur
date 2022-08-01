@@ -32,9 +32,9 @@ class Background:
 
         for i in range(const.STARS_AMOUNT):
             surf = choice(assets.Gallery.STARS)
-            if shared_data.time_state == 'day':
+            if shared_data.time_state == const.DAY:
                 surf.set_alpha(0)
-            elif shared_data.time_state == 'night':
+            elif shared_data.time_state == const.NIGHT:
                 surf.set_alpha(const.STAR_ALPHA)
 
             rect = surf.get_rect(center=star_coords[i])
@@ -42,12 +42,12 @@ class Background:
             self.stars[i] = star
 
     def draw_moon_n_stars(self):
-        if shared_data.time_state == 'night' and not self.switched_moon_phase:
+        if shared_data.time_state == const.NIGHT and not self.switched_moon_phase:
             self.moon.index += 1
             self.switched_moon_phase = True
             if self.moon.index > len(self.moon.stages) - 1:
                 self.moon.index = 0
-        elif shared_data.time_state == 'day':
+        elif shared_data.time_state == const.DAY:
             self.switched_moon_phase = False
         self.moon.draw()
 
