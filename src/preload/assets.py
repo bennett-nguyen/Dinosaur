@@ -1,6 +1,7 @@
+from tkinter import Image
 import pygame as pg
-from src.preload.comp import ImageState
 from dataclasses import dataclass
+from src.preload.comp import ImageState
 from src.preload.spritesheet import Spritesheet
 
 
@@ -25,37 +26,54 @@ class __Font:
 
 CustomFont = __Font()
 
-ground_ss = Spritesheet('./assets/img/spritesheets/ground/ground.png')
-dinosaur_ss = Spritesheet('./assets/img/spritesheets/dino/dinosaur.png')
+_ground_ss = Spritesheet('./assets/img/spritesheets/ground/ground.png')
+_cactus_ss = Spritesheet('./assets/img/spritesheets/cactus/cactus.png')
+_dinosaur_ss = Spritesheet('./assets/img/spritesheets/dino/dinosaur.png')
+_pteranodon_ss = Spritesheet('./assets/img/spritesheets/bird/bird.png') # i hate the name pteranodon bc it is too long so im gonna refer to it as a bird
 
-cloud_ss = Spritesheet('./assets/img/spritesheets/cloud/cloud.png')
-star_ss = Spritesheet('./assets/img/spritesheets/star/stars.png')
-moon_ss = Spritesheet('./assets/img/spritesheets/moon/moon.png')
+_cloud_ss = Spritesheet('./assets/img/spritesheets/cloud/cloud.png')
+_star_ss = Spritesheet('./assets/img/spritesheets/star/stars.png')
+_moon_ss = Spritesheet('./assets/img/spritesheets/moon/moon.png')
 
 @dataclass(frozen=True, eq=False, unsafe_hash=False, init=False)
 class Gallery:
-    GROUND = ImageState(ground_ss.parse_sprite('day_ground.png'), ground_ss.parse_sprite('night_ground.png'))
+    GROUND = ImageState(_ground_ss.parse_sprite('day_ground.png'), _ground_ss.parse_sprite('night_ground.png'))
 
-    DINO_BLINK = ImageState(dinosaur_ss.parse_sprite('day_blink.png'), dinosaur_ss.parse_sprite('night_blink.png'))
-    DINO_IDLE = ImageState(dinosaur_ss.parse_sprite('day_idle.png'), dinosaur_ss.parse_sprite('night_idle.png'))
-    DINO_RUNNING_1 = ImageState(dinosaur_ss.parse_sprite('day_running1.png'), dinosaur_ss.parse_sprite('night_running1.png'))
-    DINO_RUNNING_2 = ImageState(dinosaur_ss.parse_sprite('day_running2.png'), dinosaur_ss.parse_sprite('night_running2.png'))
-    DINO_DODGE_1 = ImageState(dinosaur_ss.parse_sprite('day_dino_dodge_1.png'), dinosaur_ss.parse_sprite('night_dino_dodge_1.png'))
-    DINO_DODGE_2 = ImageState(dinosaur_ss.parse_sprite('day_dino_dodge_2.png'), dinosaur_ss.parse_sprite('night_dino_dodge_2.png'))
-    DINO_DEAD = ImageState(dinosaur_ss.parse_sprite('day_dead.png'), dinosaur_ss.parse_sprite('night_dead.png'))
+    DINO_BLINK = ImageState(_dinosaur_ss.parse_sprite('day_blink.png'), _dinosaur_ss.parse_sprite('night_blink.png'))
+    DINO_IDLE = ImageState(_dinosaur_ss.parse_sprite('day_idle.png'), _dinosaur_ss.parse_sprite('night_idle.png'))
+    DINO_RUNNING_1 = ImageState(_dinosaur_ss.parse_sprite('day_running1.png'), _dinosaur_ss.parse_sprite('night_running1.png'))
+    DINO_RUNNING_2 = ImageState(_dinosaur_ss.parse_sprite('day_running2.png'), _dinosaur_ss.parse_sprite('night_running2.png'))
+    DINO_DUCK_1 = ImageState(_dinosaur_ss.parse_sprite('day_dino_duck_1.png'), _dinosaur_ss.parse_sprite('night_dino_duck_1.png'))
+    DINO_DUCK_2 = ImageState(_dinosaur_ss.parse_sprite('day_dino_duck_2.png'), _dinosaur_ss.parse_sprite('night_dino_duck_2.png'))
+    DINO_DEAD = ImageState(_dinosaur_ss.parse_sprite('day_dead.png'), _dinosaur_ss.parse_sprite('night_dead.png'))
 
-    CLOUD = ImageState(cloud_ss.parse_sprite('day_cloud.png'), cloud_ss.parse_sprite('night_cloud.png'))
-    STARS = (star_ss.parse_sprite('star_1.png'), star_ss.parse_sprite('star_2.png'), star_ss.parse_sprite('star_3.png'))
+    CLOUD = ImageState(_cloud_ss.parse_sprite('day_cloud.png'), _cloud_ss.parse_sprite('night_cloud.png'))
+    STARS = (_star_ss.parse_sprite('star_1.png'), _star_ss.parse_sprite('star_2.png'), _star_ss.parse_sprite('star_3.png'))
     MOON = {
-        'waxing-crescent': moon_ss.parse_sprite('waxing-crescent.png'),
-        'waxing-crescent-wider': moon_ss.parse_sprite('waxing-crescent-wider.png'),
-        'first-quarter': moon_ss.parse_sprite('first-quarter.png'),
-        'full-moon': moon_ss.parse_sprite('full-moon.png'),
-        'third-quarter': moon_ss.parse_sprite('third-quarter.png'),
-        'waning-crescent-wider': moon_ss.parse_sprite('waning-crescent-wider.png'),
-        'waning-crescent': moon_ss.parse_sprite('waning-crescent.png'),
+        'waxing-crescent': _moon_ss.parse_sprite('waxing-crescent.png'),
+        'waxing-crescent-wider': _moon_ss.parse_sprite('waxing-crescent-wider.png'),
+        'first-quarter': _moon_ss.parse_sprite('first-quarter.png'),
+        'full-moon': _moon_ss.parse_sprite('full-moon.png'),
+        'third-quarter': _moon_ss.parse_sprite('third-quarter.png'),
+        'waning-crescent-wider': _moon_ss.parse_sprite('waning-crescent-wider.png'),
+        'waning-crescent': _moon_ss.parse_sprite('waning-crescent.png'),
         'new-moon': pg.Surface((1, 1), pg.SRCALPHA, 32)
     }
+
+    SMALL_CACTUS_1 = ImageState(_cactus_ss.parse_sprite('day_small_cactus_1.png'), _cactus_ss.parse_sprite('night_small_cactus_1.png'))
+    SMALL_CACTUS_2 = ImageState(_cactus_ss.parse_sprite('day_small_cactus_2.png'), _cactus_ss.parse_sprite('night_small_cactus_2.png'))
+    SMALL_CACTUS_3 = ImageState(_cactus_ss.parse_sprite('day_small_cactus_3.png'), _cactus_ss.parse_sprite('night_small_cactus_3.png'))
+    SMALL_CACTUS_4 = ImageState(_cactus_ss.parse_sprite('day_small_cactus_4.png'), _cactus_ss.parse_sprite('night_small_cactus_4.png'))
+
+    BIG_CACTUS_1 = ImageState(_cactus_ss.parse_sprite('day_big_cactus_1.png'), _cactus_ss.parse_sprite('night_big_cactus_1.png'))
+    BIG_CACTUS_2 = ImageState(_cactus_ss.parse_sprite('day_big_cactus_2.png'), _cactus_ss.parse_sprite('night_big_cactus_2.png'))
+    BIG_CACTUS_3 = ImageState(_cactus_ss.parse_sprite('day_big_cactus_3.png'), _cactus_ss.parse_sprite('night_big_cactus_3.png'))
+    BIG_CACTUS_4 = ImageState(_cactus_ss.parse_sprite('day_big_cactus_5.png'), _cactus_ss.parse_sprite('night_big_cactus_5.png'))
+    BIG_CACTUS_WITH_SMALL_CACTUS = ImageState(_cactus_ss.parse_sprite('day_big_cactus_4.png'), _cactus_ss.parse_sprite('night_big_cactus_4.png'))
+    
+    PTERANODON_FLYING_1 = ImageState(_pteranodon_ss.parse_sprite('day_bird_fly_1.png'), _pteranodon_ss.parse_sprite('night_bird_fly_1.png'))
+    PTERANODON_FLYING_2 = ImageState(_pteranodon_ss.parse_sprite('day_bird_fly_2.png'), _pteranodon_ss.parse_sprite('night_bird_fly_2.png'))
+
 
 @dataclass(frozen=True, eq=False, unsafe_hash=False, init=False)
 class Audio:
