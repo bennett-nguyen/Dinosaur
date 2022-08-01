@@ -34,3 +34,11 @@ STARS_AMOUNT: int = 10
 DAY_NIGHT_CYCLE_DELAY: float | int = 7 # in seconds
 
 DINO_VELOCITY = 700
+
+DAY = 'day'
+NIGHT = 'night'
+
+IDLE = 'idle'
+DUCK = 'duck'
+RUN = 'run'
+JUMP = 'jump'
