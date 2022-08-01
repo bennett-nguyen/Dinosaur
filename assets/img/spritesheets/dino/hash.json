@@ -16,7 +16,7 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":80,"h":86},
 	"sourceSize": {"w":80,"h":86}
 },
-"day_dino_dodge_1.png":
+"day_dino_duck_1.png":
 {
 	"frame": {"x":0,"y":172,"w":110,"h":52},
 	"rotated": false,
@@ -24,7 +24,7 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":110,"h":52},
 	"sourceSize": {"w":110,"h":52}
 },
-"day_dino_dodge_2.png":
+"day_dino_duck_2.png":
 {
 	"frame": {"x":110,"y":172,"w":110,"h":52},
 	"rotated": false,
@@ -72,7 +72,7 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":80,"h":86},
 	"sourceSize": {"w":80,"h":86}
 },
-"night_dino_dodge_1.png":
+"night_dino_duck_1.png":
 {
 	"frame": {"x":220,"y":172,"w":110,"h":52},
 	"rotated": false,
@@ -80,7 +80,7 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":110,"h":52},
 	"sourceSize": {"w":110,"h":52}
 },
-"night_dino_dodge_2.png":
+"night_dino_duck_2.png":
 {
 	"frame": {"x":330,"y":172,"w":110,"h":52},
 	"rotated": false,
@@ -119,6 +119,6 @@
 	"format": "RGBA8888",
 	"size": {"w":440,"h":224},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:430ee38a044dcb17e77c63693ef279fa:a6221d55ccf2aba6b8b07dd9ab079b7a:44f554f8211ffb19be140ef2122c87a1$"
+	"smartupdate": "$TexturePacker:SmartUpdate:f9abd4856e318244f83e8fc9ca671ecc:a6221d55ccf2aba6b8b07dd9ab079b7a:44f554f8211ffb19be140ef2122c87a1$"
 }
 }
