@@ -3,10 +3,10 @@ import src.preload.ds as ds
 import src.preload.assets as assets
 import src.preload.constant as const
 from src.comp.other.dino import Dino
+from src.preload.shared import shared_data
 from src.comp.other.score_sys import ScoreSys
 from src.comp.other.background import Background
-from src.preload.shared import shared_data
-
+from src.preload.comp import timer, BOOL_OPERATOR_GEQUAL
 class Game:
     def __init__(self):
         self.transform_to = None
@@ -54,12 +54,18 @@ class Game:
 
 
     def update_color(self):
-        self.message_color = const.DAY_MESSAGE_COLOR if shared_data.time_state == 'day' else const.NIGHT_MESSAGE_COLOR
-        self.screen_color = const.DAY_SCREEN_COLOR if shared_data.time_state == 'day' else const.NIGHT_SCREEN_COLOR
+        if shared_data.time_state == const.DAY:
+            self.message_color = tuple(const.DAY_MESSAGE_COLOR)
+            self.screen_color = tuple(const.DAY_SCREEN_COLOR)
+        elif shared_data.time_state == const.NIGHT:
+            self.message_color = tuple(const.NIGHT_MESSAGE_COLOR)
+            self.screen_color = tuple(const.NIGHT_SCREEN_COLOR)
+
 
     def apply_color(self):
         self.dino.get_obj_state()
         self.score_sys.update_color(self.message_color)
+
         if not self.done_transforming_background:
             self.white_screen_1.fill(self.screen_color)
             self.white_screen_2.fill(self.screen_color)
@@ -70,6 +76,7 @@ class Game:
     def redraw(self):
         ds.screen.blit(self.ground.current, self.ground_rect)
         ds.screen.blit(self.ground_2.current, self.ground_2_rect)
+
         self.background.draw_moon_n_stars()
         if self.done_transforming_dino:
             self.background.draw_clouds()
@@ -86,13 +93,13 @@ class Game:
         self.dino.redraw()
     
     def input(self):
-        
         for event in shared_data.events:
+            # fake jump animation at start screen
             if event.type == pg.KEYDOWN and event.key == pg.K_SPACE and not self.started:
                 assets.Audio.JUMP.play()
                 self.dino.player_state = 'jump'
+                self.dino.gravity = self.dino.default_gravity
                 self.is_jumping = True
-                self.dino.gravity = -40
                 self.started = True
 
     def update(self):
@@ -109,7 +116,7 @@ class Game:
     def __move_ground(self):
         self.ground_rect.left -= round(self.dino.velocity * shared_data.dt)
         self.ground_2_rect.left -= round(self.dino.velocity * shared_data.dt)
-        
+
         if self.ground_rect.right <= 0:
             self.ground_rect.left = self.ground_2_rect.right 
         elif self.ground_2_rect.right <= 0:
@@ -120,12 +127,12 @@ class Game:
             ds.screen.blit(self.white_screen_1, self.white_screen_1_rect)
             ds.screen.blit(self.white_screen_2, self.white_screen_2_rect)
             ds.screen.blit(self.start_message, self.start_rect)
-        
+
         if not self.done_transforming_background and self.started:
             ds.screen.blit(self.white_screen_1, self.white_screen_1_rect)
             ds.screen.blit(self.white_screen_2, self.white_screen_2_rect)
             self.__transform_background()
-    
+
     def __transform_dino(self):
         if self.dino.current_rect.bottom >= self.dino.ground_pos and self.step_counter <= const.DINO_POS_X_OFFSET:
             self.allow_keydown = False
@@ -143,7 +150,7 @@ class Game:
     def __transform_background(self):
         self.white_screen_1_rect.x -= 5
         self.white_screen_2_rect.x += 40
-        
+
         if self.white_screen_1_rect.right <= 0 and self.white_screen_2_rect.left >= const.WIDTH:
             self.done_transforming_background = True
             delattr(self, 'white_screen_1')
@@ -156,18 +163,18 @@ class Game:
     def day_night_cycle(self):
         self.current_cycle_time = pg.time.get_ticks()
         if not self.switched_state_time: self.switched_state_time = pg.time.get_ticks()
-        
-        if self.current_cycle_time - self.switched_state_time >= self.cycle_delay and not self.is_transforming_state:
-            self.transform_to = 'night' if shared_data.time_state == 'day' else 'day'
+
+        if timer(self.current_cycle_time, self.switched_state_time, self.cycle_delay, BOOL_OPERATOR_GEQUAL) and not self.is_transforming_state:
+            self.transform_to = const.NIGHT if shared_data.time_state == const.DAY else const.DAY
             self.is_transforming_state = True
             self.switched_state_time = pg.time.get_ticks()
-        
-        if self.is_transforming_state:
-            if self.transform_to == 'day':
-                self.__transform_day(self.screen_color, self.message_color)
 
-            elif self.transform_to == 'night':
-                self.__transform_night(self.screen_color, self.message_color)
+        if self.is_transforming_state:
+            if self.transform_to == const.DAY:
+                self.__transform_day()
+
+            elif self.transform_to == const.NIGHT:
+                self.__transform_night()
 
         if self.done_transforming_screen_color and self.done_transforming_text_color:
             self.is_transforming_state = False
@@ -175,9 +182,9 @@ class Game:
             self.done_transforming_text_color = False
             shared_data.time_state = self.transform_to
 
-    def __transform_day(self, screen_rgb, mess_rgb):
-        screen_r, screen_g, screen_b = screen_rgb
-        mess_r, mess_g, mess_b = mess_rgb
+    def __transform_day(self):
+        screen_r, screen_g, screen_b = self.screen_color
+        mess_r, mess_g, mess_b = self.message_color
 
         speed = round(self.color_transitive_speed * shared_data.dt)
 
@@ -197,16 +204,16 @@ class Game:
             mess_b -= speed
             mess_g -= speed
 
-            if screen_r <= const.DAY_MESSAGE_COLOR.R:
+            if mess_r <= const.DAY_MESSAGE_COLOR.R:
                 self.done_transforming_text_color = True
                 mess_r, mess_g, mess_b = const.DAY_MESSAGE_COLOR
 
         self.screen_color = (screen_r, screen_g, screen_b)
-        self.message_color = (mess_r, mess_g, mess_b)    
+        self.message_color = (mess_r, mess_g, mess_b)
 
-    def __transform_night(self, screen_rgb, mess_rgb):
-        screen_r, screen_g, screen_b = screen_rgb
-        mess_r, mess_g, mess_b = mess_rgb
+    def __transform_night(self):
+        screen_r, screen_g, screen_b = self.screen_color
+        mess_r, mess_g, mess_b = self.message_color
 
         speed = round(self.color_transitive_speed * shared_data.dt)
 
@@ -230,7 +237,7 @@ class Game:
 
         self.screen_color = (screen_r, screen_g, screen_b)
         self.message_color = (mess_r, mess_g, mess_b)
-    
+
     def __change_state_at_half_rgb(self):
         shared_data.time_state = self.transform_to
         self.ground.get_state(shared_data.time_state)
