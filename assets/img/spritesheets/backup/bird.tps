@@ -34,7 +34,7 @@
         <key>dataFormat</key>
         <string>json</string>
         <key>textureFileName</key>
-        <filename>../bird/bird.png</filename>
+        <filename>../bird/pteranodon.png</filename>
         <key>flipPVR</key>
         <false/>
         <key>pvrQualityLevel</key>
@@ -173,8 +173,10 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">img/bird/day_bird_fly_1.png</key>
-            <key type="filename">img/bird/night_bird_fly_1.png</key>
+            <key type="filename">img/bird/day_pteranodon_flying_1.png</key>
+            <key type="filename">img/bird/day_pteranodon_flying_2.png</key>
+            <key type="filename">img/bird/night_pteranodon_flying_1.png</key>
+            <key type="filename">img/bird/night_pteranodon_flying_2.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -183,35 +185,19 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>21,15,42,30</rect>
+                <rect>21,20,42,40</rect>
                 <key>scale9Paddings</key>
-                <rect>21,15,42,30</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">img/bird/day_bird_fly_2.png</key>
-            <key type="filename">img/bird/night_bird_fly_2.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>21,13,42,26</rect>
-                <key>scale9Paddings</key>
-                <rect>21,13,42,26</rect>
+                <rect>21,20,42,40</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
         </map>
         <key>fileList</key>
         <array>
-            <filename>img/bird/day_bird_fly_1.png</filename>
-            <filename>img/bird/day_bird_fly_2.png</filename>
-            <filename>img/bird/night_bird_fly_1.png</filename>
-            <filename>img/bird/night_bird_fly_2.png</filename>
+            <filename>img/bird/day_pteranodon_flying_1.png</filename>
+            <filename>img/bird/day_pteranodon_flying_2.png</filename>
+            <filename>img/bird/night_pteranodon_flying_1.png</filename>
+            <filename>img/bird/night_pteranodon_flying_2.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

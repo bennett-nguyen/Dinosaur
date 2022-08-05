@@ -1,0 +1,41 @@
+{
+    "frames": {
+        "day_pteranodon_flying_1.png": {
+            "frame": { "x": 0, "y": 0, "w": 84, "h": 80 },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": { "x": 0, "y": 0, "w": 84, "h": 80 },
+            "sourceSize": { "w": 84, "h": 80 }
+        },
+        "day_pteranodon_flying_2.png": {
+            "frame": { "x": 84, "y": 0, "w": 84, "h": 80 },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": { "x": 0, "y": 0, "w": 84, "h": 80 },
+            "sourceSize": { "w": 84, "h": 80 }
+        },
+        "night_pteranodon_flying_1.png": {
+            "frame": { "x": 168, "y": 0, "w": 84, "h": 80 },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": { "x": 0, "y": 0, "w": 84, "h": 80 },
+            "sourceSize": { "w": 84, "h": 80 }
+        },
+        "night_pteranodon_flying_2.png": {
+            "frame": { "x": 252, "y": 0, "w": 84, "h": 80 },
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": { "x": 0, "y": 0, "w": 84, "h": 80 },
+            "sourceSize": { "w": 84, "h": 80 }
+        }
+    },
+    "meta": {
+        "app": "https://www.codeandweb.com/texturepacker",
+        "version": "1.0",
+        "image": "pteranodon.png",
+        "format": "RGBA8888",
+        "size": { "w": 336, "h": 80 },
+        "scale": "1",
+        "smartupdate": "$TexturePacker:SmartUpdate:0c509ca01edbc2c42088ffc31abdfac9:5e01f6c5b2cad9013150cfa1abd06f83:ff4082c19d809294205a3aa30e19c69b$"
+    }
+}
