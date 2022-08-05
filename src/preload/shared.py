@@ -17,6 +17,10 @@ class __SharedData:
     dt: float
     events: pg.event
     time_state: str
+    velocity: int
+    velocity_incrementer: int
+    distance_incrementer: int
+    GROUND_Y_VALUE: int
 
 
-shared_data = __SharedData(None, None, config['timeState'].lower())
+shared_data = __SharedData(None, None, config['timeState'].lower(), 0, 0, 0, 0)
