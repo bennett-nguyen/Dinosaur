@@ -3,6 +3,7 @@ import src.preload.ds as ds
 import src.preload.assets as assets
 import src.preload.constant as const
 from src.preload.assets import CustomFont
+from src.preload.shared import shared_data
 from src.preload.comp import timer, BOOL_OPERATOR_GEQUAL
 
 class ScoreSys:
@@ -23,6 +24,7 @@ class ScoreSys:
 
         self.current_time = 0
         self.incremented_score_time = 0
+        self.score_incrementer_subtractor_delay = 0
         self.delay = 90
 
         self.score = 0
@@ -41,7 +43,7 @@ class ScoreSys:
 
     def increment_score(self):
         self.current_time = pg.time.get_ticks()
-        if timer(self.current_time, self.incremented_score_time, self.delay, BOOL_OPERATOR_GEQUAL):
+        if timer(self.current_time, self.incremented_score_time, self.delay - self.score_incrementer_subtractor_delay, BOOL_OPERATOR_GEQUAL):
             self.score += self.score_incrementer
 
             self.score_text = self.font.render(f'{self.compute_visual(self.score)}', True, self.current_color)
@@ -51,7 +53,11 @@ class ScoreSys:
             self.highest_score_rect = self.highest_score_text.get_rect(midright=(rect_x - self.padding, rect_y))
             self.incremented_score_time = self.current_time
 
-            if self.score % (self.score_incrementer * 100) == 0:
+            if self.score % (self.score_incrementer * 100) == 0 and not self.reached_milestone:
+                shared_data.distance_incrementer = min(shared_data.distance_incrementer + 10, 500)
+                shared_data.velocity_incrementer = min(shared_data.velocity_incrementer + 50, 1000)
+                self.score_incrementer_subtractor_delay = min(self.score_incrementer_subtractor_delay + 2, 50)
+
                 assets.Audio.REACHED_MILESTONE.play()
                 self.milestone_text = self.score_text
                 self.reached_milestone = True
