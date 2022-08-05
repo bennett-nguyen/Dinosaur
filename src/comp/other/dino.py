@@ -6,9 +6,7 @@ from src.preload.shared import shared_data
 from src.preload.comp import timer, BOOL_OPERATOR_GEQUAL
 
 class Dino:
-    def __init__(self, ground_rect: pg.Rect):
-        self.ground_rect = ground_rect
-        self.ground_pos = self.ground_rect.top + const.DINO_POS_Y_OFFSET
+    def __init__(self):
         self.player_state = const.IDLE
         self.gravity = 0
         self.default_gravity = -30
@@ -22,9 +20,9 @@ class Dino:
         
         self.image = self.dino_idle
 
-        self.fake_rect = self.image.current.get_rect(midbottom=(100, self.ground_pos)) # for dino transforming
-        self.rect = self.image.current.get_rect(midbottom=(self.fake_rect.centerx + const.DINO_POS_X_OFFSET, self.ground_pos))
-        self.duck_rect = self.dino_duck[0].current.get_rect(midbottom=(self.rect.centerx + 10, self.ground_pos))
+        self.fake_rect = self.image.current.get_rect(midbottom=(100, shared_data.GROUND_Y_VALUE)) # for dino transforming
+        self.rect = self.image.current.get_rect(midbottom=(self.fake_rect.centerx + const.DINO_POS_X_OFFSET, shared_data.GROUND_Y_VALUE))
+        self.duck_rect = self.dino_duck[0].current.get_rect(midbottom=(self.rect.centerx + 10, shared_data.GROUND_Y_VALUE))
 
         self.current_rect = self.fake_rect
 
@@ -38,7 +36,6 @@ class Dino:
 
         # running & dodge
         self.index = 0
-        self.velocity = const.DINO_VELOCITY
         self.animation_speed = 10
         self.is_dodging = False
 
@@ -55,7 +52,7 @@ class Dino:
     def input(self):
         for event in shared_data.events:
             if event.type == pg.KEYDOWN:
-                if event.key == pg.K_SPACE and self.current_rect.bottom >= self.ground_pos and not self.is_dodging:
+                if event.key == pg.K_SPACE and self.current_rect.bottom >= shared_data.GROUND_Y_VALUE and not self.is_dodging:
                         assets.Audio.JUMP.play()
                         self.is_jumping = True
                         self.player_state = const.JUMP
@@ -64,19 +61,23 @@ class Dino:
                     if not self.is_jumping:
                         self.player_state = const.DUCK
                         self.is_dodging = True
+                    else:
+                        self.gravity_incrementer = 7
 
             if event.type == pg.KEYUP and event.key == pg.K_DOWN and not self.is_jumping:
                 self.player_state = const.RUN
                 self.current_rect = self.rect
                 self.is_dodging = False
+                
 
 
     def apply_gravity(self):
         self.gravity += self.gravity_incrementer
         self.current_rect.y += self.gravity
-        if self.current_rect.bottom >= self.ground_pos:
-            self.current_rect.bottom = self.ground_pos
+        if self.current_rect.bottom >= shared_data.GROUND_Y_VALUE:
+            self.current_rect.bottom = shared_data.GROUND_Y_VALUE
             self.is_jumping = False
+            self.gravity_incrementer = 2
 
     def _check_player_state(self):
         match self.player_state:
