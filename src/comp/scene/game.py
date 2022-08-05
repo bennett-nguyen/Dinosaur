@@ -6,7 +6,9 @@ from src.comp.other.dino import Dino
 from src.preload.shared import shared_data
 from src.comp.other.score_sys import ScoreSys
 from src.comp.other.background import Background
+from src.comp.other.obstacle import ObstacleGenerator
 from src.preload.comp import timer, BOOL_OPERATOR_GEQUAL
+
 class Game:
     def __init__(self):
         self.transform_to = None
@@ -17,7 +19,6 @@ class Game:
         self.done_transforming_screen_color = False
         self.cycle_delay = const.DAY_NIGHT_CYCLE_DELAY * 1000
         self.color_transitive_speed = 150
-
         self.update_color()
 
         self.ground = self.ground_2 = assets.Gallery.GROUND
@@ -26,11 +27,13 @@ class Game:
 
         self.ground_rect = self.ground.current.get_rect(bottomleft = (0, const.HEIGHT - const.GROUND_POS_Y_OFFSET))
         self.ground_2_rect = self.ground_2.current.get_rect(bottomleft = (self.ground_rect.right, self.ground_rect.bottom))
+        shared_data.GROUND_Y_VALUE = self.ground_rect.top + const.DINO_POS_Y_OFFSET
 
         # Services
-        self.dino = Dino(self.ground_rect)
+        self.dino = Dino()
         self.score_sys = ScoreSys(self.message_color)
         self.background = Background()
+        self.obstacles_generator = ObstacleGenerator()
         
         # Temporary stuff
         self.started = False
@@ -86,7 +89,7 @@ class Game:
         if self.done_transforming_background:
             if self.done_transforming_dino:
                 self.__move_ground()
-
+                self.obstacles_generator.move_and_redraw_obstacle()
             else:
                 self.__transform_dino()
 
@@ -103,6 +106,7 @@ class Game:
                 self.started = True
 
     def update(self):
+        self.obstacles_generator.generate_object()
         if self.allow_keydown:
             self.input()
             if self.done_transforming_dino:
@@ -114,8 +118,9 @@ class Game:
         self.dino.apply_gravity()
 
     def __move_ground(self):
-        self.ground_rect.left -= round(self.dino.velocity * shared_data.dt)
-        self.ground_2_rect.left -= round(self.dino.velocity * shared_data.dt)
+        shared_data.velocity =  round((const.DINO_VELOCITY + shared_data.velocity_incrementer) * shared_data.dt)
+        self.ground_rect.left -= shared_data.velocity
+        self.ground_2_rect.left -= shared_data.velocity
 
         if self.ground_rect.right <= 0:
             self.ground_rect.left = self.ground_2_rect.right 
@@ -134,7 +139,7 @@ class Game:
             self.__transform_background()
 
     def __transform_dino(self):
-        if self.dino.current_rect.bottom >= self.dino.ground_pos and self.step_counter <= const.DINO_POS_X_OFFSET:
+        if self.dino.current_rect.bottom >= shared_data.GROUND_Y_VALUE and self.step_counter <= const.DINO_POS_X_OFFSET:
             self.allow_keydown = False
             self.dino.current_rect.x += 1
             self.step_counter += 1
