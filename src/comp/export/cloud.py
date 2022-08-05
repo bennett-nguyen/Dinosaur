@@ -11,9 +11,7 @@ class Cloud:
         self.velocity = velocity
 
     def move(self):
-        rect_x = self.rect.x
-        rect_x -= round(self.velocity * shared_data.dt)
-        self.rect.x = rect_x
+        self.rect.x -= round((self.velocity + shared_data.velocity_incrementer) * shared_data.dt)
         if self.rect.right <= 0:
             self.rect.left = const.WIDTH
 
