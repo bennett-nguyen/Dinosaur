@@ -29,7 +29,7 @@ CustomFont = __Font()
 _ground_ss = Spritesheet('./assets/img/spritesheets/ground/ground.png')
 _cactus_ss = Spritesheet('./assets/img/spritesheets/cactus/cactus.png')
 _dinosaur_ss = Spritesheet('./assets/img/spritesheets/dino/dinosaur.png')
-_pteranodon_ss = Spritesheet('./assets/img/spritesheets/bird/bird.png') # i hate the name pteranodon bc it is too long so im gonna refer to it as a bird
+_pteranodon_ss = Spritesheet('./assets/img/spritesheets/pteranodon/pteranodon.png')
 
 _cloud_ss = Spritesheet('./assets/img/spritesheets/cloud/cloud.png')
 _star_ss = Spritesheet('./assets/img/spritesheets/star/stars.png')
@@ -71,8 +71,8 @@ class Gallery:
     BIG_CACTUS_4 = ImageState(_cactus_ss.parse_sprite('day_big_cactus_5.png'), _cactus_ss.parse_sprite('night_big_cactus_5.png'))
     BIG_CACTUS_WITH_SMALL_CACTUS = ImageState(_cactus_ss.parse_sprite('day_big_cactus_4.png'), _cactus_ss.parse_sprite('night_big_cactus_4.png'))
     
-    PTERANODON_FLYING_1 = ImageState(_pteranodon_ss.parse_sprite('day_bird_fly_1.png'), _pteranodon_ss.parse_sprite('night_bird_fly_1.png'))
-    PTERANODON_FLYING_2 = ImageState(_pteranodon_ss.parse_sprite('day_bird_fly_2.png'), _pteranodon_ss.parse_sprite('night_bird_fly_2.png'))
+    PTERANODON_FLYING_1 = ImageState(_pteranodon_ss.parse_sprite('day_pteranodon_flying_1.png'), _pteranodon_ss.parse_sprite('night_pteranodon_flying_1.png'))
+    PTERANODON_FLYING_2 = ImageState(_pteranodon_ss.parse_sprite('day_pteranodon_flying_2.png'), _pteranodon_ss.parse_sprite('night_pteranodon_flying_2.png'))
 
 
 @dataclass(frozen=True, eq=False, unsafe_hash=False, init=False)
