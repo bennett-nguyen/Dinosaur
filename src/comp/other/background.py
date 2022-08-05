@@ -26,7 +26,7 @@ class Background:
         for i in range(const.CLOUDS_AMOUNT):
             surf = assets.Gallery.CLOUD
             rect = surf.current.get_rect(center=cloud_coords[i])
-            cloud = Cloud(surf, rect, 50)
+            cloud = Cloud(surf, rect, const.CLOUD_VELOCITY)
             self.clouds[i] = cloud
 
 
