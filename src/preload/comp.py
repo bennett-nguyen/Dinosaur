@@ -1,7 +1,8 @@
+import pygame as pg
 import src.preload.constant as const
 
 class ImageState:
-    def __init__(self, day_image, night_image):
+    def __init__(self, day_image: pg.Surface, night_image: pg.Surface):
         self.day_image = day_image
         self.night_image = night_image
 
