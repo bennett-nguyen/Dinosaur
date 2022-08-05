@@ -31,9 +31,17 @@ MOON_ALPHA: int = 255
 CLOUDS_AMOUNT: int = 6
 STARS_AMOUNT: int = 10
 
-DAY_NIGHT_CYCLE_DELAY: float | int = 7 # in seconds
+DAY_NIGHT_CYCLE_DELAY: float | int = 38 # in seconds
 
 DINO_VELOCITY = 700
+CLOUD_VELOCITY = 50
+
+CLOSE_OBSTACLE_DISTANCE = 500
+FAR_OBSTACLE_DISTANCE = 800
+PTERANODON_DISTANCE = 1200
+
+MAX_OBSTACLE = 3
+
 
 DAY = 'day'
 NIGHT = 'night'
@@ -42,3 +50,6 @@ IDLE = 'idle'
 DUCK = 'duck'
 RUN = 'run'
 JUMP = 'jump'
+
+PTERANODON = 'ptenarodon'
+CACTUS = 'cactus'
