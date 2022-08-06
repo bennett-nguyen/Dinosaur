@@ -9,9 +9,10 @@ from src.preload.shared import shared_data
 
 main_game = Game()
 
-dt = 0
-current = 0
-last = time.time()
+dt: float = 0
+current: float = 0
+last: float = time.time()
+
 while True:
     current = time.time()
     dt = current - last
