@@ -54,8 +54,8 @@ class ScoreSys:
             self.incremented_score_time = self.current_time
 
             if self.score % (self.score_incrementer * 100) == 0 and not self.reached_milestone:
-                shared_data.distance_incrementer = min(shared_data.distance_incrementer + 10, 500)
-                shared_data.velocity_incrementer = min(shared_data.velocity_incrementer + 50, 1000)
+                shared_data.distance_incrementer = min(shared_data.distance_incrementer + 20, 500)
+                shared_data.velocity_incrementer = min(shared_data.velocity_incrementer + 70, 1000)
                 self.score_incrementer_subtractor_delay = min(self.score_incrementer_subtractor_delay + 2, 50)
 
                 assets.Audio.REACHED_MILESTONE.play()
