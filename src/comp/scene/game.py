@@ -106,6 +106,9 @@ class Game:
                 self.started = True
 
     def update(self):
+        # if self.check_collide():
+        #     self.game_over()
+
         self.obstacles_generator.generate_object()
         if self.allow_keydown:
             self.input()
@@ -116,6 +119,12 @@ class Game:
 
         self.redraw()
         self.dino.apply_gravity()
+
+    def check_collide(self):
+        pass
+
+    def game_over(self):
+        pass
 
     def __move_ground(self):
         shared_data.velocity =  round((const.DINO_VELOCITY + shared_data.velocity_incrementer) * shared_data.dt)
