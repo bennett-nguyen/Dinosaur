@@ -1,5 +1,6 @@
 import pygame as pg
 import src.preload.constant as const
+from typing import Optional
 
 class ImageState:
     def __init__(self, day_image: pg.Surface, night_image: pg.Surface):
@@ -15,11 +16,46 @@ class ImageState:
             case const.NIGHT:
                 self.current = self.night_image
 
-BOOL_OPERATOR_LEQUAL = 0 # <=
-BOOL_OPERATOR_GEQUAL = 1 # >=
+class Timer:
+    '''
+    Standard timer for pygame
+    '''
+    def __init__(self, length_of_timer):
+        self.current_time = 0
+        self.static_point = 0
+        self.length_of_timer = length_of_timer
+        self.paused_delay = 0
 
-def timer(current_time: float, static_point: float, length_of_timer: float, bool_operator: int) -> bool:
-    if bool_operator == BOOL_OPERATOR_GEQUAL:
-        return current_time - static_point >= length_of_timer
-    elif bool_operator == BOOL_OPERATOR_LEQUAL:
-        return current_time - static_point <= length_of_timer
+    def set_static_point(self):
+        self.static_point = pg.time.get_ticks()
+
+    def set_current_time(self):
+        self.current_time = pg.time.get_ticks()
+
+    def timer(self, new_length_of_timer: Optional[int | float] = None) -> bool:
+        length_of_timer = self.length_of_timer if new_length_of_timer is None else new_length_of_timer
+        return self.current_time - self.static_point > length_of_timer
+
+
+class MultiTimer:
+    def __init__(self, length_of_timers: list[int | float]):
+        self.length_of_timers = length_of_timers
+        self.index = 0
+        self.current_timer = self.length_of_timers[self.index]
+        self.current_time = 0
+        self.static_point = 0
+
+    def set_static_point(self):
+        self.static_point = pg.time.get_ticks()
+
+    def set_current_time(self):
+        self.current_time = pg.time.get_ticks()
+
+    def timer(self) -> bool:
+        return self.current_time - self.static_point > self.current_timer
+
+    def switch_timer(self):
+        self.index += 1
+        if self.index > len(self.length_of_timers) - 1:
+            self.index = 0
+        self.current_timer = self.length_of_timers[self.index]
