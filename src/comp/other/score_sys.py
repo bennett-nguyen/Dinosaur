@@ -2,9 +2,10 @@ import pygame as pg
 import src.preload.ds as ds
 import src.preload.assets as assets
 import src.preload.constant as const
+
+from src.preload.comp import Timer
 from src.preload.assets import CustomFont
 from src.preload.shared import shared_data
-from src.preload.comp import timer, BOOL_OPERATOR_GEQUAL
 
 class ScoreSys:
     def __init__(self, text_color: tuple[int, int, int]):
@@ -13,19 +14,18 @@ class ScoreSys:
         self.score_incrementer = 1
         self.current_color = text_color
         
-        # animation
-        self.animation_current_time = 0
-        self.blink_time = 0
-        self.activated_time = 0
+        self.score_incrementer_subtractor_delay = 0
+        
+
+        # Timer
+        self.delay = 90
         self.blink_delay = 200
         self.animation_play_time = 2000
         self.is_blinking = False
-        
 
-        self.current_time = 0
-        self.incremented_score_time = 0
-        self.score_incrementer_subtractor_delay = 0
-        self.delay = 90
+        self.score_timer = Timer(self.delay)
+        self.animation_play_time_timer = Timer(self.animation_play_time)
+        self.blink_animation_timer = Timer(self.blink_delay)
 
         self.score = 0
         self.highest_score = 0
@@ -42,8 +42,10 @@ class ScoreSys:
         self.highest_score_rect = self.highest_score_text.get_rect(midright=(rect_x - self.padding, rect_y))
 
     def increment_score(self):
-        self.current_time = pg.time.get_ticks()
-        if timer(self.current_time, self.incremented_score_time, self.delay - self.score_incrementer_subtractor_delay, BOOL_OPERATOR_GEQUAL):
+        self.score_timer.set_current_time()
+        self.animation_play_time_timer.set_current_time()
+
+        if self.score_timer.timer(self.score_timer.length_of_timer - self.score_incrementer_subtractor_delay):
             self.score += self.score_incrementer
 
             self.score_text = self.font.render(f'{self.compute_visual(self.score)}', True, self.current_color)
@@ -51,7 +53,7 @@ class ScoreSys:
             
             rect_x, rect_y = self.score_rect.midleft
             self.highest_score_rect = self.highest_score_text.get_rect(midright=(rect_x - self.padding, rect_y))
-            self.incremented_score_time = self.current_time
+            self.score_timer.set_static_point()
 
             if self.score % (self.score_incrementer * 100) == 0 and not self.reached_milestone:
                 shared_data.distance_incrementer = min(shared_data.distance_incrementer + 20, 500)
@@ -61,8 +63,8 @@ class ScoreSys:
                 assets.Audio.REACHED_MILESTONE.play()
                 self.milestone_text = self.score_text
                 self.reached_milestone = True
-                self.activated_time = pg.time.get_ticks()
-                self.blink_time = pg.time.get_ticks()
+                self.blink_animation_timer.set_static_point()
+                self.animation_play_time_timer.set_static_point()
     
     def redraw(self):
         if self.reached_milestone:
@@ -86,16 +88,17 @@ class ScoreSys:
         return f'{prefix}{score}'
 
     def milestone_animation(self):
-        self.animation_current_time = pg.time.get_ticks()
-        if timer(self.current_time, self.activated_time, self.animation_play_time, BOOL_OPERATOR_GEQUAL):
+        self.blink_animation_timer.set_current_time()
+
+        if self.animation_play_time_timer.timer():
             self.reached_milestone = False
             return
 
-        if timer(self.animation_current_time, self.blink_time, self.blink_delay, BOOL_OPERATOR_GEQUAL) and not self.is_blinking:
+        if self.blink_animation_timer.timer() and not self.is_blinking:
             self.is_blinking = True
-            self.blink_time = pg.time.get_ticks()
+            self.blink_animation_timer.set_static_point()
             return
 
-        if timer(self.animation_current_time, self.blink_time, self.blink_delay, BOOL_OPERATOR_GEQUAL):
+        if self.blink_animation_timer.timer():
             self.is_blinking = False
-            self.blink_time = pg.time.get_ticks()
+            self.blink_animation_timer.set_static_point()

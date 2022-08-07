@@ -2,8 +2,8 @@ import pygame as pg
 import src.preload.ds as ds
 import src.preload.assets as assets
 import src.preload.constant as const
+from src.preload.comp import MultiTimer
 from src.preload.shared import shared_data
-from src.preload.comp import timer, BOOL_OPERATOR_GEQUAL
 
 class Dino:
     def __init__(self):
@@ -17,7 +17,8 @@ class Dino:
         self.dino_duck = (assets.Gallery.DINO_DUCK_1, assets.Gallery.DINO_DUCK_2)
         self.dino_blink = assets.Gallery.DINO_BLINK
         self.dino_dead = assets.Gallery.DINO_DEAD
-        
+
+
         self.image = self.dino_idle
 
         self.fake_rect = self.image.current.get_rect(midbottom=(100, shared_data.GROUND_Y_VALUE)) # for dino transforming
@@ -28,16 +29,15 @@ class Dino:
 
         # -- Animation stuff
         # idle
-        self.current_time = 0
-        self.blink_activated_time = 0
         self.is_blinking = False
-        self.blink_delay = 7000
-        self.blinking_time = 200
+        self.blink_delay = 7000 # how long you want the dino to stay unblink
+        self.blinking_time = 200 # how long you want the dino to blink
+        self.blink_multitimer = MultiTimer([self.blink_delay, self.blinking_time])
 
         # running & dodge
         self.index = 0
         self.animation_speed = 10
-        self.is_dodging = False
+        self.is_ducking = False
 
         # jump
         self.is_jumping = False
@@ -52,7 +52,7 @@ class Dino:
     def input(self):
         for event in shared_data.events:
             if event.type == pg.KEYDOWN:
-                if event.key == pg.K_SPACE and self.current_rect.bottom >= shared_data.GROUND_Y_VALUE and not self.is_dodging:
+                if event.key == pg.K_SPACE and self.current_rect.bottom >= shared_data.GROUND_Y_VALUE and not self.is_ducking:
                         assets.Audio.JUMP.play()
                         self.is_jumping = True
                         self.player_state = const.JUMP
@@ -60,15 +60,14 @@ class Dino:
                 elif event.key == pg.K_DOWN:
                     if not self.is_jumping:
                         self.player_state = const.DUCK
-                        self.is_dodging = True
+                        self.is_ducking = True
                     else:
                         self.gravity_incrementer = 7
 
             if event.type == pg.KEYUP and event.key == pg.K_DOWN and not self.is_jumping:
                 self.player_state = const.RUN
                 self.current_rect = self.rect
-                self.is_dodging = False
-                
+                self.is_ducking = False
 
 
     def apply_gravity(self):
@@ -82,7 +81,8 @@ class Dino:
     def _check_player_state(self):
         match self.player_state:
             case const.IDLE:
-                if not self.blink_activated_time: self.blink_activated_time = pg.time.get_ticks()
+                if not self.blink_multitimer.static_point:
+                    self.blink_multitimer.set_static_point()
                 self._idle_animation()
             case const.JUMP:
                 self._jump_animation()
@@ -92,18 +92,22 @@ class Dino:
                 self._duck_animation()
 
     def _idle_animation(self):
-        self.current_time = pg.time.get_ticks()
+        self.blink_multitimer.set_current_time()
 
-        if timer(self.current_time, self.blink_activated_time, self.blink_delay, BOOL_OPERATOR_GEQUAL) and not self.is_blinking:
+        if self.blink_multitimer.timer() and not self.is_blinking:
             self.is_blinking = True
             self.image = self.dino_blink
-            self.blink_activated_time = self.current_time = pg.time.get_ticks()
+            self.blink_multitimer.set_current_time()
+            self.blink_multitimer.set_static_point()
+            self.blink_multitimer.switch_timer()
             return
 
-        if timer(self.current_time, self.blink_activated_time, self.blinking_time, BOOL_OPERATOR_GEQUAL) and self.is_blinking:
+        if self.blink_multitimer.timer() and self.is_blinking:
             self.is_blinking = False
             self.image = self.dino_idle
-            self.blink_activated_time = self.current_time = pg.time.get_ticks()
+            self.blink_multitimer.set_current_time()
+            self.blink_multitimer.set_static_point()
+            self.blink_multitimer.switch_timer()
 
     def _jump_animation(self):
         if self.is_jumping:
