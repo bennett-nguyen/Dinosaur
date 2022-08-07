@@ -2,22 +2,21 @@ import pygame as pg
 import src.preload.ds as ds
 import src.preload.assets as assets
 import src.preload.constant as const
+
+from src.preload.comp import Timer
 from src.comp.other.dino import Dino
 from src.preload.shared import shared_data
+# from src.comp.other.paused_screen import PausedScreen
 from src.comp.other.score_sys import ScoreSys
 from src.comp.other.background import Background
 from src.comp.other.obstacle import ObstacleGenerator
-from src.preload.comp import timer, BOOL_OPERATOR_GEQUAL
 
 class Game:
     def __init__(self):
         self.transform_to = None
-        self.current_cycle_time = 0
-        self.switched_state_time = 0
         self.is_transforming_state = False
         self.done_transforming_text_color = False
         self.done_transforming_screen_color = False
-        self.cycle_delay = const.DAY_NIGHT_CYCLE_DELAY * 1000
         self.color_transitive_speed = 150
         self.update_color()
 
@@ -34,6 +33,11 @@ class Game:
         self.score_sys = ScoreSys(self.message_color)
         self.background = Background()
         self.obstacles_generator = ObstacleGenerator()
+        # self.paused_screen = PausedScreen() # this feature is still buggy
+        
+        # Timers
+        self.cycle_delay = const.DAY_NIGHT_CYCLE_DELAY * 1000
+        self.cycle_timer = Timer(self.cycle_delay)
         
         # Temporary stuff
         self.started = False
@@ -98,12 +102,15 @@ class Game:
     def input(self):
         for event in shared_data.events:
             # fake jump animation at start screen
-            if event.type == pg.KEYDOWN and event.key == pg.K_SPACE and not self.started:
-                assets.Audio.JUMP.play()
-                self.dino.player_state = 'jump'
-                self.dino.gravity = self.dino.default_gravity
-                self.is_jumping = True
-                self.started = True
+            if event.type == pg.KEYDOWN:
+                if event.key == pg.K_SPACE and not self.started:
+                    assets.Audio.JUMP.play()
+                    self.dino.player_state = 'jump'
+                    self.dino.gravity = self.dino.default_gravity
+                    self.is_jumping = True
+                    self.started = True
+                # if event.key == pg.K_p:
+                #     self.paused_screen.run = True
 
     def update(self):
         # if self.check_collide():
@@ -113,6 +120,11 @@ class Game:
         if self.allow_keydown:
             self.input()
             if self.done_transforming_dino:
+                # if self.paused_screen.run == True:
+                #     paused_time = pg.time.get_ticks()
+                    # self.paused_screen.paused_time = paused_time
+                    # self.paused_screen.change_title_color(self.message_color)
+                    # self.paused_screen.activate_pause_screen()
                 self.day_night_cycle()
                 self.dino.input()
                 self.score_sys.increment_score()
@@ -175,13 +187,13 @@ class Game:
             delattr(self, 'start_rect')
 
     def day_night_cycle(self):
-        self.current_cycle_time = pg.time.get_ticks()
-        if not self.switched_state_time: self.switched_state_time = pg.time.get_ticks()
+        self.cycle_timer.set_current_time()
+        if not self.cycle_timer.static_point: self.cycle_timer.set_static_point()
 
-        if timer(self.current_cycle_time, self.switched_state_time, self.cycle_delay, BOOL_OPERATOR_GEQUAL) and not self.is_transforming_state:
+        if self.cycle_timer.timer() and not self.is_transforming_state:
             self.transform_to = const.NIGHT if shared_data.time_state == const.DAY else const.DAY
             self.is_transforming_state = True
-            self.switched_state_time = pg.time.get_ticks()
+            self.cycle_timer.set_static_point()
 
         if self.is_transforming_state:
             if self.transform_to == const.DAY:
