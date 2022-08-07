@@ -1,4 +1,3 @@
-from tkinter import Image
 import pygame as pg
 from dataclasses import dataclass
 from src.preload.comp import ImageState
@@ -34,6 +33,7 @@ _pteranodon_ss = Spritesheet('./assets/img/spritesheets/pteranodon/pteranodon.pn
 _cloud_ss = Spritesheet('./assets/img/spritesheets/cloud/cloud.png')
 _star_ss = Spritesheet('./assets/img/spritesheets/star/stars.png')
 _moon_ss = Spritesheet('./assets/img/spritesheets/moon/moon.png')
+_continue_button_ss = Spritesheet('././assets/img/spritesheets/continue/continue.png')
 
 @dataclass(frozen=True, eq=False, unsafe_hash=False, init=False)
 class Gallery:
@@ -74,6 +74,7 @@ class Gallery:
     PTERANODON_FLYING_1 = ImageState(_pteranodon_ss.parse_sprite('day_pteranodon_flying_1.png'), _pteranodon_ss.parse_sprite('night_pteranodon_flying_1.png'))
     PTERANODON_FLYING_2 = ImageState(_pteranodon_ss.parse_sprite('day_pteranodon_flying_2.png'), _pteranodon_ss.parse_sprite('night_pteranodon_flying_2.png'))
 
+    CONTINUE_BUTTON = ImageState(_continue_button_ss.parse_sprite('day_continue_button.png'), _continue_button_ss.parse_sprite('night_continue_button.png'))
 
 @dataclass(frozen=True, eq=False, unsafe_hash=False, init=False)
 class Audio:
