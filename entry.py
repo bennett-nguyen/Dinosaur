@@ -13,7 +13,7 @@ dt: float = 0
 current: float = 0
 last: float = time.time()
 
-while True:
+while 1:
     current = time.time()
     dt = current - last
     last = current
@@ -30,6 +30,6 @@ while True:
         if event.type == pg.QUIT:
             pg.quit()
             exit()
-            
+
     main_game.update()
-    pg.display.update()
+    pg.display.flip()
