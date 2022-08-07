@@ -173,8 +173,8 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">img/continue/day_continue_button.png</key>
             <key type="filename">img/continue/night_continue_button.png</key>
-            <key type="filename">img/continue/play_continue_button.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -193,7 +193,7 @@
         <key>fileList</key>
         <array>
             <filename>img/continue/night_continue_button.png</filename>
-            <filename>img/continue/play_continue_button.png</filename>
+            <filename>img/continue/day_continue_button.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
