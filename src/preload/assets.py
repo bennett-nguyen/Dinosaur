@@ -40,11 +40,11 @@ class Gallery:
     GROUND = ImageState(_ground_ss.parse_sprite('day_ground.png'), _ground_ss.parse_sprite('night_ground.png'))
 
     DINO_BLINK = ImageState(_dinosaur_ss.parse_sprite('day_blink.png'), _dinosaur_ss.parse_sprite('night_blink.png'))
-    DINO_IDLE = ImageState(_dinosaur_ss.parse_sprite('day_idle.png'), _dinosaur_ss.parse_sprite('night_idle.png'))
-    DINO_RUNNING_1 = ImageState(_dinosaur_ss.parse_sprite('day_running1.png'), _dinosaur_ss.parse_sprite('night_running1.png'))
-    DINO_RUNNING_2 = ImageState(_dinosaur_ss.parse_sprite('day_running2.png'), _dinosaur_ss.parse_sprite('night_running2.png'))
-    DINO_DUCK_1 = ImageState(_dinosaur_ss.parse_sprite('day_dino_duck_1.png'), _dinosaur_ss.parse_sprite('night_dino_duck_1.png'))
-    DINO_DUCK_2 = ImageState(_dinosaur_ss.parse_sprite('day_dino_duck_2.png'), _dinosaur_ss.parse_sprite('night_dino_duck_2.png'))
+    DINO_IDLE = ImageState(_dinosaur_ss.parse_sprite('day_idle.png'), _dinosaur_ss.parse_sprite('night_idle.png'), True)
+    DINO_RUNNING_1 = ImageState(_dinosaur_ss.parse_sprite('day_running1.png'), _dinosaur_ss.parse_sprite('night_running1.png'), True)
+    DINO_RUNNING_2 = ImageState(_dinosaur_ss.parse_sprite('day_running2.png'), _dinosaur_ss.parse_sprite('night_running2.png'), True)
+    DINO_DUCK_1 = ImageState(_dinosaur_ss.parse_sprite('day_dino_duck_1.png'), _dinosaur_ss.parse_sprite('night_dino_duck_1.png'), True)
+    DINO_DUCK_2 = ImageState(_dinosaur_ss.parse_sprite('day_dino_duck_2.png'), _dinosaur_ss.parse_sprite('night_dino_duck_2.png'), True)
     DINO_DEAD = ImageState(_dinosaur_ss.parse_sprite('day_dead.png'), _dinosaur_ss.parse_sprite('night_dead.png'))
 
     CLOUD = ImageState(_cloud_ss.parse_sprite('day_cloud.png'), _cloud_ss.parse_sprite('night_cloud.png'))
@@ -71,8 +71,8 @@ class Gallery:
     BIG_CACTUS_4 = ImageState(_cactus_ss.parse_sprite('day_big_cactus_5.png'), _cactus_ss.parse_sprite('night_big_cactus_5.png'))
     BIG_CACTUS_WITH_SMALL_CACTUS = ImageState(_cactus_ss.parse_sprite('day_big_cactus_4.png'), _cactus_ss.parse_sprite('night_big_cactus_4.png'))
     
-    PTERANODON_FLYING_1 = ImageState(_pteranodon_ss.parse_sprite('day_pteranodon_flying_1.png'), _pteranodon_ss.parse_sprite('night_pteranodon_flying_1.png'))
-    PTERANODON_FLYING_2 = ImageState(_pteranodon_ss.parse_sprite('day_pteranodon_flying_2.png'), _pteranodon_ss.parse_sprite('night_pteranodon_flying_2.png'))
+    PTERANODON_FLYING_1 = ImageState(_pteranodon_ss.parse_sprite('day_pteranodon_flying_1.png'), _pteranodon_ss.parse_sprite('night_pteranodon_flying_1.png'), True)
+    PTERANODON_FLYING_2 = ImageState(_pteranodon_ss.parse_sprite('day_pteranodon_flying_2.png'), _pteranodon_ss.parse_sprite('night_pteranodon_flying_2.png'), True)
 
     CONTINUE_BUTTON = ImageState(_continue_button_ss.parse_sprite('day_continue_button.png'), _continue_button_ss.parse_sprite('night_continue_button.png'))
 
