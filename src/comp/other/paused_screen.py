@@ -28,19 +28,10 @@ class PausedScreen:
         self.title = self.font.render('P A U S E D', True, color)
 
     def activate_pause_screen(self):
-        while self.run:
-            self.current_time = pg.time.get_ticks()
-            ds.clock.tick(const.PAUSED_FPS)
+        self.current_time = pg.time.get_ticks()
+        self.button.get_state(shared_data.time_state)
 
-            self.button.get_state(shared_data.time_state)
+        ds.screen.blit(self.button.current, self.button_rect)
+        ds.screen.blit(self.title, self.title_rect)
 
-            ds.screen.blit(self.button.current, self.button_rect)
-            ds.screen.blit(self.title, self.title_rect)
-
-            for event in pg.event.get():
-                if event.type == pg.QUIT:
-                    pg.quit()
-                    exit()
-
-            self.button_on_click()
-            pg.display.update()
+        self.button_on_click()
