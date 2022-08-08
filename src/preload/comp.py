@@ -34,7 +34,10 @@ class Timer:
 
     def timer(self, new_length_of_timer: Optional[int | float] = None) -> bool:
         length_of_timer = self.length_of_timer if new_length_of_timer is None else new_length_of_timer
-        return self.current_time - self.static_point > length_of_timer
+        return self.current_time - self.static_point > length_of_timer + self.paused_delay
+
+    def reset_paused_delay(self):
+        self.paused_delay = 0
 
 
 class MultiTimer:
