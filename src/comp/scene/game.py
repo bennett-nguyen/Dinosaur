@@ -114,41 +114,59 @@ class Game:
                 if event.key == pg.K_p and self.done_transforming_dino:
                     self.paused_screen.run = True
 
+            elif event.type == pg.WINDOWFOCUSLOST or event.type == pg.WINDOWMOVED and self.done_transforming_dino:
+                self.paused_screen.run = True
+
     def update(self):
-        # if self.check_collide():
-        #     self.game_over()
 
         if not self.paused_screen.run:
-            self.obstacles_generator.generate_object()
-            if self.allow_keydown:
-                self.input()
-                if self.done_transforming_dino:
-                    self.day_night_cycle()
-                    self.dino.input()
-                    self.score_sys.increment_score()
-
-            self.dino.apply_gravity()
-            self.redraw()
-
-            if shared_data.paused_delay:
-                self.cycle_timer.paused_delay = shared_data.paused_delay
-                shared_data.paused_delay = 0
-
+            self.__main()
         else:
-            if not self.paused_screen.paused_time:
-                self.paused_screen.paused_time = pg.time.get_ticks()
+            self.__paused()
+    
+    def __main(self):
+        self.obstacles_generator.generate_object()
 
-            self.paused_screen.activate_pause_screen()
-            shared_data.paused_delay = self.paused_screen.paused_delay
+        if self.check_collide():
+            self.game_over()
 
-            if not self.paused_screen.run:
-                self.paused_screen.paused_time = 0
+        if self.allow_keydown:
+            self.input()
+            if self.done_transforming_dino:
+
+                self.day_night_cycle()
+                self.dino.input()
+                self.score_sys.increment_score()
+
+        self.dino.apply_gravity()
+        self.redraw()
+
+        if shared_data.paused_delay:
+            self.cycle_timer.paused_delay = shared_data.paused_delay
+            shared_data.paused_delay = 0
+
+    def __paused(self):
+        if not self.paused_screen.paused_time:
+            self.paused_screen.paused_time = pg.time.get_ticks()
+
+        self.paused_screen.activate_pause_screen()
+        shared_data.paused_delay = self.paused_screen.paused_delay
+
+        if not self.paused_screen.run:
+            self.paused_screen.paused_time = 0
 
     def check_collide(self):
-        pass
+        obstacle = self.obstacles_generator.obstacles[0]
+        dino = self.dino
+        if self.dino.rect.colliderect(obstacle.rect):
+            offset_x = obstacle.rect.x - dino.rect.left
+            offset_y = obstacle.rect.y - dino.rect.top
+            return self.dino.image.mask.overlap_area(obstacle.image.mask, (offset_x, offset_y)) >= 10
+
+        return False
 
     def game_over(self):
-        pass
+        print('no way dino is dead!!!!11111')
 
     def __move_ground(self):
         shared_data.velocity =  round((const.DINO_VELOCITY + shared_data.velocity_incrementer) * shared_data.dt)
