@@ -3,11 +3,12 @@ import src.preload.constant as const
 from typing import Optional
 
 class ImageState:
-    def __init__(self, day_image: pg.Surface, night_image: pg.Surface):
+    def __init__(self, day_image: pg.Surface, night_image: pg.Surface, init_mask: bool = False):
         self.day_image = day_image
         self.night_image = night_image
 
-        self.current = self.day_image
+        if init_mask:
+            self.mask = pg.mask.from_surface(self.current)
 
     def get_state(self, code):
         match code:
