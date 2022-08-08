@@ -6,11 +6,14 @@ import src.preload.constant as const
 from src.preload.comp import Timer
 from src.comp.other.dino import Dino
 from src.preload.shared import shared_data
-# from src.comp.other.paused_screen import PausedScreen
+from src.comp.other.paused_screen import PausedScreen
 from src.comp.other.score_sys import ScoreSys
 from src.comp.other.background import Background
 from src.comp.other.obstacle import ObstacleGenerator
 
+import logging
+
+logging.basicConfig(level=logging.DEBUG, filename='test.log')
 class Game:
     def __init__(self):
         self.transform_to = None
@@ -33,7 +36,7 @@ class Game:
         self.score_sys = ScoreSys(self.message_color)
         self.background = Background()
         self.obstacles_generator = ObstacleGenerator()
-        # self.paused_screen = PausedScreen() # this feature is still buggy
+        self.paused_screen = PausedScreen() # this feature is still buggy
         
         # Timers
         self.cycle_delay = const.DAY_NIGHT_CYCLE_DELAY * 1000
@@ -79,7 +82,6 @@ class Game:
             start_font = assets.CustomFont.get_font('PressStart2P', 25)
             self.start_message = start_font.render("Press 'Space' to play", True, self.message_color)
 
-
     def redraw(self):
         ds.screen.blit(self.ground.current, self.ground_rect)
         ds.screen.blit(self.ground_2.current, self.ground_2_rect)
@@ -109,28 +111,38 @@ class Game:
                     self.dino.gravity = self.dino.default_gravity
                     self.is_jumping = True
                     self.started = True
-                # if event.key == pg.K_p:
-                #     self.paused_screen.run = True
+                if event.key == pg.K_p and self.done_transforming_dino:
+                    self.paused_screen.run = True
 
     def update(self):
         # if self.check_collide():
         #     self.game_over()
 
-        self.obstacles_generator.generate_object()
-        if self.allow_keydown:
-            self.input()
-            if self.done_transforming_dino:
-                # if self.paused_screen.run == True:
-                #     paused_time = pg.time.get_ticks()
-                    # self.paused_screen.paused_time = paused_time
-                    # self.paused_screen.change_title_color(self.message_color)
-                    # self.paused_screen.activate_pause_screen()
-                self.day_night_cycle()
-                self.dino.input()
-                self.score_sys.increment_score()
+        if not self.paused_screen.run:
+            self.obstacles_generator.generate_object()
+            if self.allow_keydown:
+                self.input()
+                if self.done_transforming_dino:
+                    self.day_night_cycle()
+                    self.dino.input()
+                    self.score_sys.increment_score()
 
-        self.redraw()
-        self.dino.apply_gravity()
+            self.dino.apply_gravity()
+            self.redraw()
+
+            if shared_data.paused_delay:
+                self.cycle_timer.paused_delay = shared_data.paused_delay
+                shared_data.paused_delay = 0
+
+        else:
+            if not self.paused_screen.paused_time:
+                self.paused_screen.paused_time = pg.time.get_ticks()
+
+            self.paused_screen.activate_pause_screen()
+            shared_data.paused_delay = self.paused_screen.paused_delay
+
+            if not self.paused_screen.run:
+                self.paused_screen.paused_time = 0
 
     def check_collide(self):
         pass
@@ -194,6 +206,7 @@ class Game:
             self.transform_to = const.NIGHT if shared_data.time_state == const.DAY else const.DAY
             self.is_transforming_state = True
             self.cycle_timer.set_static_point()
+            self.cycle_timer.reset_paused_delay()
 
         if self.is_transforming_state:
             if self.transform_to == const.DAY:
@@ -268,3 +281,4 @@ class Game:
         shared_data.time_state = self.transform_to
         self.ground.get_state(shared_data.time_state)
         self.ground_2.get_state(shared_data.time_state)
+        self.paused_screen.change_title_color(self.message_color)
