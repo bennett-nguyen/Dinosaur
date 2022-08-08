@@ -12,7 +12,7 @@ Libraries:
     - read requirement.txt
 ```
 
-# Control
+## Control
 
 - Space: Jump
 - Down arrow button: Duck
