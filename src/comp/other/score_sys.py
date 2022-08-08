@@ -15,7 +15,6 @@ class ScoreSys:
         self.current_color = text_color
         
         self.score_incrementer_subtractor_delay = 0
-        
 
         # Timer
         self.delay = 90
@@ -47,8 +46,10 @@ class ScoreSys:
 
         if self.score_timer.timer(self.score_timer.length_of_timer - self.score_incrementer_subtractor_delay):
             self.score += self.score_incrementer
+            
+            text = self.compute_visual(self.score)
 
-            self.score_text = self.font.render(f'{self.compute_visual(self.score)}', True, self.current_color)
+            self.score_text = self.font.render(f'{text}', True, self.current_color)
             self.score_rect = self.score_text.get_rect(topright=(const.WIDTH - self.padding, 0 + self.padding))
             
             rect_x, rect_y = self.score_rect.midleft
@@ -62,6 +63,7 @@ class ScoreSys:
 
                 assets.Audio.REACHED_MILESTONE.play()
                 self.milestone_text = self.score_text
+                self.milestone_text_string = text
                 self.reached_milestone = True
                 self.blink_animation_timer.set_static_point()
                 self.animation_play_time_timer.set_static_point()
@@ -70,6 +72,7 @@ class ScoreSys:
         if self.reached_milestone:
             self.milestone_animation()
             if not self.is_blinking:
+                self.milestone_text = self.font.render(f'{self.milestone_text_string}', True, self.current_color)
                 ds.screen.blit(self.milestone_text, self.score_rect)
         else:
             ds.screen.blit(self.score_text, self.score_rect)
