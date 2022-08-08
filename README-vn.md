@@ -8,10 +8,17 @@ Phiên bản Python: 3.10.5
 Các thư viện cần thiết:
     - đọc requirement.txt
 ```
+## Điều khiển
+
+- Space: Nhảy
+- Phím mũi tên xuống: Duck
+- P: Dừng game
+
+Nhấn phím mũi tên xuống khi dino đang nhảy sẽ khiến dino rơi nhanh hơn
 
 ## TODO
 - [ ] Thêm collision giữa dinosaur và chướng ngại vật
-- [ ] Thêm tính năng dừng game
+- [x] Thêm tính năng dừng game
 - [ ] Thêm tính năng thua game
 - [ ] Thêm tính năng save game
 
@@ -45,6 +52,7 @@ CHÚ Ý: Hướng dẫn chỉ dành cho hệ điều hành Windows, các hệ đ
 
 ## Đóng góp
 Nếu bạn bắt gặp game có vấn đề về performance hoặc có bug thì bạn có thể mở một issue tại tab Issues
+
 ## Giấp phép
 
 Dự án này sử dụng giấy phép MIT

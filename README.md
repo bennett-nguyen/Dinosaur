@@ -12,9 +12,18 @@ Libraries:
     - read requirement.txt
 ```
 
+# Control
+
+- Space: Jump
+- Down arrow button: Duck
+- P: Pause
+
+Jumping while pressing down arrow will make the dino fall faster
+
+
 ## TODO
 - [ ] Add collision between dino and obstacles
-- [ ] Add paused screen
+- [x] Add paused screen
 - [ ] Add lost screen
 - [ ] Add progress saver feature
 
