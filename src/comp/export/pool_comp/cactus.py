@@ -9,7 +9,6 @@ class Cactus:
     def __init__(self, images: list[ImageState]):
         self.__init_surface(images)
         self.__draw_cactus(images)
-        self.images = images
         self.is_standalone_object = len(images) == 1
         self.x = const.WIDTH + 100
         self.rect = self.image.current.get_rect(midbottom=(self.x, shared_data.GROUND_Y_VALUE))
@@ -38,7 +37,7 @@ class Cactus:
             self.night_surf.blit(image.night_image.copy(), (pos_x, 0))
             pos_x += image.current.get_width() + 5 # 5 for some spacing between each cactus
 
-        self.image = ImageState(self.day_surf, self.night_surf)
+        self.image = ImageState(self.day_surf, self.night_surf, True)
         delattr(self, 'day_surf')
         delattr(self, 'night_surf')
     

@@ -13,9 +13,9 @@ class Pteranodon:
         self.index = 0
         self.animation_speed = 6
         self.id = const.PTERANODON
-        self.x = const.WIDTH + 200
-        self.y = randint(shared_data.GROUND_Y_VALUE - 100, shared_data.GROUND_Y_VALUE)
-        self.rect = self.image.current.get_rect(midbottom=(self.x, self.y))
+        x = const.WIDTH + 200
+        y = randint(shared_data.GROUND_Y_VALUE - 100, shared_data.GROUND_Y_VALUE)
+        self.rect = self.image.current.get_rect(midbottom=(x, y))
 
     def fly(self):
         self.index += self.animation_speed * shared_data.dt
