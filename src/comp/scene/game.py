@@ -5,15 +5,14 @@ import src.preload.constant as const
 
 from src.preload.comp import Timer
 from src.comp.other.dino import Dino
-from src.preload.shared import shared_data
-from src.comp.other.paused_screen import PausedScreen
+from src.preload.shared import shared_data, cache
 from src.comp.other.score_sys import ScoreSys
 from src.comp.other.background import Background
+from src.comp.other.lost_screen import LostScreen
+from src.comp.other.paused_screen import PausedScreen
 from src.comp.other.obstacle import ObstacleGenerator
 
-import logging
 
-logging.basicConfig(level=logging.DEBUG, filename='test.log')
 class Game:
     def __init__(self):
         self.transform_to = None
@@ -36,8 +35,9 @@ class Game:
         self.score_sys = ScoreSys(self.message_color)
         self.background = Background()
         self.obstacles_generator = ObstacleGenerator()
-        self.paused_screen = PausedScreen() # this feature is still buggy
-        
+        self.paused_screen = PausedScreen()
+        self.lost_screen = LostScreen(self._reset)
+
         # Timers
         self.cycle_delay = const.DAY_NIGHT_CYCLE_DELAY * 1000
         self.cycle_timer = Timer(self.cycle_delay)
@@ -62,6 +62,29 @@ class Game:
         self.white_screen_1_rect = self.white_screen_1.get_rect(topleft=(0, 0))
         self.white_screen_2_rect = self.white_screen_2.get_rect(topright=(const.WIDTH, 0))
 
+    def _reset(self):
+        self.transform_to = cache.time_state
+        shared_data.allow_animation = True
+        self.allow_keydown = True
+
+        self.score_sys.reset()
+        self.dino.reset()
+        self.obstacles_generator.reset()
+        self.background.reset()
+        
+        if cache.time_state == const.DAY:
+            self.message_color = const.DAY_MESSAGE_COLOR
+            self.screen_color = const.DAY_SCREEN_COLOR
+        else:
+            self.message_color = const.NIGHT_MESSAGE_COLOR
+            self.screen_color = const.NIGHT_SCREEN_COLOR
+
+        self.lost_screen.change_state(self.message_color)
+        self.paused_screen.change_state(self.message_color)
+        self.ground.get_state(cache.time_state)
+        self.ground_2.get_state(cache.time_state)
+
+        self.cycle_timer.reset_timer()
 
     def update_color(self):
         if shared_data.time_state == const.DAY:
@@ -82,6 +105,7 @@ class Game:
             start_font = assets.CustomFont.get_font('PressStart2P', 25)
             self.start_message = start_font.render("Press 'Space' to play", True, self.message_color)
 
+
     def redraw(self):
         ds.screen.blit(self.ground.current, self.ground_rect)
         ds.screen.blit(self.ground_2.current, self.ground_2_rect)
@@ -94,12 +118,14 @@ class Game:
 
         if self.done_transforming_background:
             if self.done_transforming_dino:
-                self.__move_ground()
-                self.obstacles_generator.move_and_redraw_obstacle()
+                self.obstacles_generator.redraw_obstacle()
             else:
                 self.__transform_dino()
 
         self.dino.redraw()
+        
+        if shared_data.is_lose:
+            self.lost_screen.activate()
     
     def input(self):
         for event in shared_data.events:
@@ -107,38 +133,42 @@ class Game:
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_SPACE and not self.started:
                     assets.Audio.JUMP.play()
-                    self.dino.player_state = 'jump'
+                    self.dino.player_state = const.JUMP
                     self.dino.gravity = self.dino.default_gravity
                     self.is_jumping = True
                     self.started = True
                 if event.key == pg.K_p and self.done_transforming_dino:
                     self.paused_screen.run = True
+                    shared_data.allow_animation = False
 
-            elif event.type == pg.WINDOWFOCUSLOST or event.type == pg.WINDOWMOVED and self.done_transforming_dino:
+            elif event.type in [pg.WINDOWFOCUSLOST, pg.WINDOWMOVED] and self.done_transforming_dino:
                 self.paused_screen.run = True
+                shared_data.allow_animation = False
 
     def update(self):
-
         if not self.paused_screen.run:
             self.__main()
         else:
             self.__paused()
-    
-    def __main(self):
+
+    def _main_event(self):
         self.obstacles_generator.generate_object()
+        if self.check_collide(): self.game_over()
+        self.dino.apply_gravity()
+        self.background.move_clouds()
+        self.day_night_cycle()
+        self.obstacles_generator.move_obstacle()
+        self.__move_ground()
+        self.score_sys.increment_score()
 
-        if self.check_collide():
-            self.game_over()
-
+    def __main(self):
         if self.allow_keydown:
             self.input()
             if self.done_transforming_dino:
-
-                self.day_night_cycle()
                 self.dino.input()
-                self.score_sys.increment_score()
+                if not shared_data.is_lose:
+                    self._main_event()
 
-        self.dino.apply_gravity()
         self.redraw()
 
         if shared_data.paused_delay:
@@ -146,10 +176,11 @@ class Game:
             shared_data.paused_delay = 0
 
     def __paused(self):
+        self.redraw()
         if not self.paused_screen.paused_time:
             self.paused_screen.paused_time = pg.time.get_ticks()
 
-        self.paused_screen.activate_pause_screen()
+        self.paused_screen.activate()
         shared_data.paused_delay = self.paused_screen.paused_delay
 
         if not self.paused_screen.run:
@@ -161,12 +192,16 @@ class Game:
         if self.dino.rect.colliderect(obstacle.rect):
             offset_x = obstacle.rect.x - dino.rect.left
             offset_y = obstacle.rect.y - dino.rect.top
-            return self.dino.image.mask.overlap_area(obstacle.image.mask, (offset_x, offset_y)) >= 10
+            return self.dino.image.mask.overlap_area(obstacle.image.mask, (offset_x, offset_y)) >= 15
 
         return False
 
     def game_over(self):
-        print('no way dino is dead!!!!11111')
+        assets.Audio.DEATH.play()
+        self.allow_keydown = False
+        shared_data.is_lose = True
+        shared_data.allow_animation = False
+        self.score_sys.reached_milestone = False
 
     def __move_ground(self):
         shared_data.velocity =  round((const.DINO_VELOCITY + shared_data.velocity_incrementer) * shared_data.dt)
@@ -299,4 +334,6 @@ class Game:
         shared_data.time_state = self.transform_to
         self.ground.get_state(shared_data.time_state)
         self.ground_2.get_state(shared_data.time_state)
-        self.paused_screen.change_title_color(self.message_color)
+        color = const.DAY_MESSAGE_COLOR if shared_data.time_state == const.DAY else const.NIGHT_MESSAGE_COLOR
+        self.paused_screen.change_state(color)
+        self.lost_screen.change_state(color)
