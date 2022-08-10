@@ -12,13 +12,11 @@ class ObstacleGenerator:
         self.generate_to_object = [const.CACTUS, const.PTERANODON]
         self.pteranodon_pool = pteranodon_pool
         self.cacti_pool = cacti_pool
-
-    def move_and_redraw_obstacle(self):
+    
+    def move_obstacle(self):
         for obstacle in self.obstacles[:]:
             obstacle.move()
-            if obstacle.rect.left < const.WIDTH:
-                obstacle.redraw()
-
+            
             if obstacle.rect.right < 0:
                 if obstacle.id == const.CACTUS:
                     self.cacti_pool.release_object(obstacle)
@@ -26,6 +24,11 @@ class ObstacleGenerator:
                     self.pteranodon_pool.release_object(obstacle)
 
                 self.obstacles.remove(obstacle)
+
+    def redraw_obstacle(self):
+        for obstacle in self.obstacles[:]:
+            if obstacle.rect.left < const.WIDTH:
+                obstacle.redraw()
 
     def generate_object(self):
         if len(self.obstacles) >= const.MAX_OBSTACLE:
@@ -51,3 +54,11 @@ class ObstacleGenerator:
                 ptenarodon = pteranodon_pool.get_object()
                 ptenarodon.change_pos(static_point + const.PTERANODON_DISTANCE + shared_data.distance_incrementer)
                 self.obstacles.append(ptenarodon)
+    
+    def reset(self):
+        for obstacle in self.obstacles[:]:
+            if obstacle.id == const.PTERANODON:
+                self.pteranodon_pool.release_object(obstacle)
+            elif obstacle.id == const.CACTUS:
+                self.cacti_pool.release_object(obstacle)
+            self.obstacles.remove(obstacle)
