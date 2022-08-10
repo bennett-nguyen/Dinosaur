@@ -18,9 +18,10 @@ class Pteranodon:
         self.rect = self.image.current.get_rect(midbottom=(x, y))
 
     def fly(self):
-        self.index += self.animation_speed * shared_data.dt
-        if self.index >= len(self.animation):
-            self.index = 0
+        if shared_data.allow_animation:
+            self.index += self.animation_speed * shared_data.dt
+            if self.index >= len(self.animation):
+                self.index = 0
 
         self.image = self.animation[int(self.index)]
 
