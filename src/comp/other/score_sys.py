@@ -50,10 +50,9 @@ class ScoreSys:
             text = self.compute_visual(self.score)
 
             self.score_text = self.font.render(f'{text}', True, self.current_color)
-            self.score_rect = self.score_text.get_rect(topright=(const.WIDTH - self.padding, 0 + self.padding))
-            
-            rect_x, rect_y = self.score_rect.midleft
-            self.highest_score_rect = self.highest_score_text.get_rect(midright=(rect_x - self.padding, rect_y))
+            if len(text) > self.score_length: self.score_rect = self.score_text.get_rect(topright=(const.WIDTH - self.padding, 0 + self.padding))
+
+            self.highest_score_rect.right = self.score_rect.left - self.padding
             self.score_timer.set_static_point()
 
             if self.score % (self.score_incrementer * 100) == 0 and not self.reached_milestone:
@@ -105,3 +104,7 @@ class ScoreSys:
         if self.blink_animation_timer.timer():
             self.is_blinking = False
             self.blink_animation_timer.set_static_point()
+    
+    def reset(self):
+        self.highest_score = max(self.score, self.highest_score)
+        self.score = 0
