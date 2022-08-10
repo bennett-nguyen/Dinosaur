@@ -7,6 +7,8 @@ class ImageState:
         self.day_image = day_image
         self.night_image = night_image
 
+        self.current = self.day_image
+
         if init_mask:
             self.mask = pg.mask.from_surface(self.current)
 
@@ -39,6 +41,10 @@ class Timer:
 
     def reset_paused_delay(self):
         self.paused_delay = 0
+    
+    def reset_timer(self):
+        self.paused_delay = 0
+        self.current_time = self.static_point = pg.time.get_ticks()
 
 
 class MultiTimer:
