@@ -6,7 +6,7 @@ from random import choice
 from src.comp.export.star import Star
 from src.comp.export.moon import Moon
 from src.comp.export.cloud import Cloud
-from src.preload.shared import shared_data
+from src.preload.shared import shared_data, cache
 
 
 class Background:
@@ -21,11 +21,11 @@ class Background:
         self.stars: list[Star] = [0] * const.STARS_AMOUNT
 
         star_coords = ((68, 119), (349, 144), (107, 75), (478, 97), (274, 148), (908, 91), (1169, 87), (835, 68), (741, 81), (1179, 108))
-        cloud_coords = ((2170, 108), (1657, 57), (1877, 137), (1304, 70), (1549, 65), (2013, 93))
+        self.cloud_coords = ((2170, 108), (1657, 57), (1877, 137), (1304, 70), (1549, 65), (2013, 93))
 
         for i in range(const.CLOUDS_AMOUNT):
             surf = assets.Gallery.CLOUD
-            rect = surf.current.get_rect(center=cloud_coords[i])
+            rect = surf.current.get_rect(center=self.cloud_coords[i])
             cloud = Cloud(surf, rect, const.CLOUD_VELOCITY)
             self.clouds[i] = cloud
 
@@ -53,8 +53,31 @@ class Background:
 
         for star in self.stars:
             star.draw()
-    
-    def draw_clouds(self):
+
+    def move_clouds(self):
         for cloud in self.clouds:
             cloud.move()
+
+    def draw_clouds(self):
+        for cloud in self.clouds:
             cloud.draw()
+    
+    def reset(self):
+        if cache.time_state == const.DAY:
+            self.moon.index = -1
+            self.moon.alpha = 0
+            self.moon.surf.set_alpha(0)
+            for star in self.stars:
+                star.alpha = 0
+                star.image.set_alpha(0)
+
+        elif cache.time_state == const.NIGHT:
+            self.moon.index = 0
+            self.moon.alpha = 255
+            self.moon.surf.set_alpha(255)
+            for star in self.stars:
+                star.alpha = 255
+                star.image.set_alpha(255)
+        
+        for cloud, coords in zip(self.clouds, self.cloud_coords):
+            cloud.rect.center = coords
