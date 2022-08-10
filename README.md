@@ -12,6 +12,9 @@ Libraries:
     - read requirement.txt
 ```
 
+## Update
+At this point, the game is playable. However, you should keep in mind that there will be several bugs that appear in the game and the game will be a bit laggy along with that. I will try my best to patch all of them in the future.
+
 ## Control
 
 - Space: Jump
@@ -22,9 +25,9 @@ Jumping while pressing down arrow will make the dino fall faster
 
 
 ## TODO
-- [ ] Add collision between dino and obstacles
+- [x] Add collision between dino and obstacles
 - [x] Add paused screen
-- [ ] Add lost screen
+- [x] Add lost screen
 - [ ] Add progress saver feature
 
 ## Build Instruction

@@ -8,6 +8,10 @@ Phiên bản Python: 3.10.5
 Các thư viện cần thiết:
     - đọc requirement.txt
 ```
+
+## Update
+Ở thời điểm hiện tại, game đã có thể chơi được. Tuy nhiên, game vẫn có nhiều bug và hơi lag. Mình sẽ cố gắng fix hết tất cả các bug hiện có trong tương lai.
+
 ## Điều khiển
 
 - Space: Nhảy
