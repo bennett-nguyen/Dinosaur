@@ -174,7 +174,7 @@
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
             <key type="filename">img/retry/day_retry_button.png</key>
-            <key type="filename">img/retry/night_replay_button.png</key>
+            <key type="filename">img/retry/night_retry_button.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -193,7 +193,7 @@
         <key>fileList</key>
         <array>
             <filename>img/retry/day_retry_button.png</filename>
-            <filename>img/retry/night_replay_button.png</filename>
+            <filename>img/retry/night_retry_button.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
