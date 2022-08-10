@@ -3,7 +3,6 @@
 If you don't understand English, click [here](README-vn.md) / Nếu bạn không hiểu tiếng Anh, bấm vào [đây](README-vn.md)
 
 A Chrome dinosaur game written entirely in Python.
-(Collision hasn't been added yet)
 
 ```
 Platform: PC
