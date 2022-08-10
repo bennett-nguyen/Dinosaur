@@ -79,6 +79,10 @@ class Dino:
             self.gravity_incrementer = 2
 
     def _check_player_state(self):
+        if shared_data.is_lose:
+            self._dead_animation()
+            return
+
         match self.player_state:
             case const.IDLE:
                 if not self.blink_multitimer.static_point:
@@ -117,16 +121,29 @@ class Dino:
         self.player_state = const.RUN
 
     def _running_animation(self):
-        self.index += self.animation_speed * shared_data.dt
-        if self.index >= len(self.dino_running):
-            self.index = 0
+        if shared_data.allow_animation:
+            self.index += self.animation_speed * shared_data.dt
+            if self.index >= len(self.dino_running):
+                self.index = 0
 
         self.image = self.dino_running[int(self.index)]
 
     def _duck_animation(self):
-        self.index += self.animation_speed * shared_data.dt
-        if self.index >= len(self.dino_running):
-            self.index = 0
+        if shared_data.allow_animation:
+            self.index += self.animation_speed * shared_data.dt
+            if self.index >= len(self.dino_running):
+                self.index = 0
 
         self.image = self.dino_duck[int(self.index)]
         self.current_rect = self.duck_rect
+
+    def _dead_animation(self):
+        self.image = self.dino_dead
+        self.current_rect = self.rect
+    
+    def reset(self):
+        self.is_ducking = False
+        self.is_jumping = False
+        self.current_rect.bottom = shared_data.GROUND_Y_VALUE
+        self.player_state = const.RUN
+        self.index = 0
