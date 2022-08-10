@@ -33,7 +33,8 @@ _pteranodon_ss = Spritesheet('./assets/img/spritesheets/pteranodon/pteranodon.pn
 _cloud_ss = Spritesheet('./assets/img/spritesheets/cloud/cloud.png')
 _star_ss = Spritesheet('./assets/img/spritesheets/star/stars.png')
 _moon_ss = Spritesheet('./assets/img/spritesheets/moon/moon.png')
-_continue_button_ss = Spritesheet('././assets/img/spritesheets/continue/continue.png')
+_continue_button_ss = Spritesheet('./assets/img/spritesheets/continue/continue.png')
+_retry_button_ss = Spritesheet('./assets/img/spritesheets/retry/retry.png')
 
 @dataclass(frozen=True, eq=False, unsafe_hash=False, init=False)
 class Gallery:
@@ -75,6 +76,7 @@ class Gallery:
     PTERANODON_FLYING_2 = ImageState(_pteranodon_ss.parse_sprite('day_pteranodon_flying_2.png'), _pteranodon_ss.parse_sprite('night_pteranodon_flying_2.png'), True)
 
     CONTINUE_BUTTON = ImageState(_continue_button_ss.parse_sprite('day_continue_button.png'), _continue_button_ss.parse_sprite('night_continue_button.png'))
+    RETRY_BUTTON = ImageState(_retry_button_ss.parse_sprite('day_retry_button.png'), _retry_button_ss.parse_sprite('night_retry_button.png'))
 
 @dataclass(frozen=True, eq=False, unsafe_hash=False, init=False)
 class Audio:
