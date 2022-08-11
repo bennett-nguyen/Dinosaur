@@ -147,3 +147,5 @@ class Dino:
         self.current_rect.bottom = shared_data.GROUND_Y_VALUE
         self.player_state = const.RUN
         self.index = 0
+        self.gravity = 0
+        self.gravity_incrementer = 2
