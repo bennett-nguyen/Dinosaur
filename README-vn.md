@@ -1,7 +1,9 @@
 # Dinosaur
 
 Game khủng long trên Chrome được viết lại bằng Python.
-
+<br>
+<br>
+![dino](https://user-images.githubusercontent.com/83117848/184066075-b714ef8c-7dc6-4768-9b24-7cca80990cdb.gif)
 ```
 Platform: PC
 Phiên bản Python: 3.10.5
@@ -12,6 +14,7 @@ Các thư viện cần thiết:
 ## Update
 Game đã có nhiều bug fix, giờ thì có thể chơi game thoải mái mà không bị bug làm ảnh hưởng đến gameplay
 (có điều hơi lag)
+
 
 ## Điều khiển
 
