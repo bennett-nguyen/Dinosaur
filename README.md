@@ -16,7 +16,7 @@ Libraries:
 
 ## Update
 Introduce major bug fixes that affect the gameplay, now you can freely play the game without the bug ruining your experience
-(it's big laggy tho)
+(it's a bit laggy tho)
 
 ## Control
 
