@@ -3,6 +3,9 @@
 If you don't understand English, click [here](README-vn.md) / Nếu bạn không hiểu tiếng Anh, bấm vào [đây](README-vn.md)
 
 A Chrome dinosaur game written entirely in Python.
+<br>
+<br>
+![dino](https://user-images.githubusercontent.com/83117848/184065978-c6e65022-8df4-40f8-a4b6-ce53810f175d.gif)
 
 ```
 Platform: PC
