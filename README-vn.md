@@ -25,9 +25,9 @@ Game đã có nhiều bug fix, giờ thì có thể chơi game thoải mái mà 
 Nhấn phím mũi tên xuống khi dino đang nhảy sẽ khiến dino rơi nhanh hơn
 
 ## TODO
-- [ ] Thêm collision giữa dinosaur và chướng ngại vật
+- [x] Thêm collision giữa dinosaur và chướng ngại vật
 - [x] Thêm tính năng dừng game
-- [ ] Thêm tính năng thua game
+- [x] Thêm tính năng thua game
 - [ ] Thêm tính năng save game
 
 ## Hướng dẫn build game từ mã nguồn
