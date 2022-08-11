@@ -164,6 +164,7 @@ class Game:
     def __main(self):
         if self.allow_keydown:
             self.input()
+            if not self.done_transforming_dino and self.started: self.dino.apply_gravity()
             if self.done_transforming_dino:
                 self.dino.input()
                 if not shared_data.is_lose:
