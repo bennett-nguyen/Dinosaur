@@ -191,8 +191,8 @@ class Game:
         obstacle = self.obstacles_generator.obstacles[0]
         dino = self.dino
         if self.dino.rect.colliderect(obstacle.rect):
-            offset_x = obstacle.rect.x - dino.rect.left
-            offset_y = obstacle.rect.y - dino.rect.top
+            offset_x = obstacle.rect.x - dino.current_rect.left
+            offset_y = obstacle.rect.y - dino.current_rect.top
             return self.dino.image.mask.overlap_area(obstacle.image.mask, (offset_x, offset_y)) >= 15
 
         return False
