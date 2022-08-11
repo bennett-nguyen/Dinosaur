@@ -107,4 +107,5 @@ class ScoreSys:
     
     def reset(self):
         self.highest_score = max(self.score, self.highest_score)
+        self.score_incrementer_subtractor_delay = 0
         self.score = 0
