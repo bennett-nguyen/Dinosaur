@@ -10,7 +10,8 @@ Các thư viện cần thiết:
 ```
 
 ## Update
-Ở thời điểm hiện tại, game đã có thể chơi được. Tuy nhiên, game vẫn có nhiều bug và hơi lag. Mình sẽ cố gắng fix hết tất cả các bug hiện có trong tương lai.
+Game đã có nhiều bug fix, giờ thì có thể chơi game thoải mái mà không bị bug làm ảnh hưởng đến gameplay
+(có điều hơi lag)
 
 ## Điều khiển
 

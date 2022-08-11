@@ -12,7 +12,8 @@ Libraries:
 ```
 
 ## Update
-At this point, the game is playable. However, you should keep in mind that there will be several bugs that appear in the game and the game will be a bit laggy along with that. I will try my best to patch all of them in the future.
+Introduce major bug fixes that affect the gameplay, now you can freely play the game without the bug ruining your experience
+(it's big laggy tho)
 
 ## Control
 
