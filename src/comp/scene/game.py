@@ -140,10 +140,13 @@ class Game:
                 if event.key == pg.K_p and self.done_transforming_dino:
                     self.paused_screen.run = True
                     shared_data.allow_animation = False
+                    self.score_sys.reached_milestone = False
 
             elif event.type in [pg.WINDOWFOCUSLOST, pg.WINDOWMOVED] and self.done_transforming_dino:
                 self.paused_screen.run = True
                 shared_data.allow_animation = False
+                self.score_sys.reached_milestone = False
+                
 
     def update(self):
         if not self.paused_screen.run:
