@@ -1,7 +1,9 @@
 # Dinosaur
 
 Game khủng long trên Chrome được viết lại bằng Python.
-
+<br>
+<br>
+![dino](https://user-images.githubusercontent.com/83117848/184066075-b714ef8c-7dc6-4768-9b24-7cca80990cdb.gif)
 ```
 Platform: PC
 Phiên bản Python: >=3.7
@@ -50,3 +52,4 @@ Nếu bạn bắt gặp game có vấn đề về performance hoặc có bug th�
 
 ## Giấp phép
 Dự án này sử dụng giấy phép MIT
+
