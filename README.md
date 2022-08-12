@@ -28,7 +28,7 @@ Jumping while pressing down arrow will make the dino fall faster
 ATTENTION: This instruction is designed specifically for Windows
 
 Prerequisites:
-- Install Python 3.10 at [python.org](https://www.python.org/)
+- Install the latest version of Python at [python.org](https://www.python.org/)
 
 To automatically build the game from source (**easiest method**), you can follow this instruction:
 
