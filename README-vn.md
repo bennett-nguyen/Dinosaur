@@ -25,7 +25,7 @@ Nhấn phím mũi tên xuống khi dino đang nhảy sẽ khiến dino rơi nhan
 CHÚ Ý: Hướng dẫn chỉ dành cho hệ điều hành Windows, các hệ điều hành khác có thể không phù hợp
 
 Điều kiện tiên quyết:
-- Tải Python 3.10 tại [python.org](https://www.python.org/)
+- Tải phiên bản mới nhất của Python tại [python.org](https://www.python.org/)
 
 Để build game một cách tự động mà không tốn nhiều công sức, xem hướng dẫn sau:
 
