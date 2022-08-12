@@ -6,14 +6,10 @@ A Chrome dinosaur game written entirely in Python.
 
 ```
 Platform: PC
-Python version: 3.10.5
+Python version: >=3.7
 Libraries:
     - read requirement.txt
 ```
-
-## Update
-Introduce major bug fixes that affect the gameplay, now you can freely play the game without the bug ruining your experience
-(it's big laggy tho)
 
 ## Control
 
@@ -22,13 +18,6 @@ Introduce major bug fixes that affect the gameplay, now you can freely play the 
 - P: Pause
 
 Jumping while pressing down arrow will make the dino fall faster
-
-
-## TODO
-- [x] Add collision between dino and obstacles
-- [x] Add paused screen
-- [x] Add lost screen
-- [ ] Add progress saver feature
 
 ## Build Instruction
 

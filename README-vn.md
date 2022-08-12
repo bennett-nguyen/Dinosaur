@@ -4,14 +4,10 @@ Game khủng long trên Chrome được viết lại bằng Python.
 
 ```
 Platform: PC
-Phiên bản Python: 3.10.5
+Phiên bản Python: >=3.7
 Các thư viện cần thiết:
     - đọc requirement.txt
 ```
-
-## Update
-Game đã có nhiều bug fix, giờ thì có thể chơi game thoải mái mà không bị bug làm ảnh hưởng đến gameplay
-(có điều hơi lag)
 
 ## Điều khiển
 
@@ -20,12 +16,6 @@ Game đã có nhiều bug fix, giờ thì có thể chơi game thoải mái mà 
 - P: Dừng game
 
 Nhấn phím mũi tên xuống khi dino đang nhảy sẽ khiến dino rơi nhanh hơn
-
-## TODO
-- [ ] Thêm collision giữa dinosaur và chướng ngại vật
-- [x] Thêm tính năng dừng game
-- [ ] Thêm tính năng thua game
-- [ ] Thêm tính năng save game
 
 ## Hướng dẫn build game từ mã nguồn
 
@@ -59,5 +49,4 @@ CHÚ Ý: Hướng dẫn chỉ dành cho hệ điều hành Windows, các hệ đ
 Nếu bạn bắt gặp game có vấn đề về performance hoặc có bug thì bạn có thể mở một issue tại tab Issues
 
 ## Giấp phép
-
 Dự án này sử dụng giấy phép MIT
