@@ -29,7 +29,6 @@ class Background:
             cloud = Cloud(surf, rect, const.CLOUD_VELOCITY)
             self.clouds[i] = cloud
 
-
         for i in range(const.STARS_AMOUNT):
             surf = choice(assets.Gallery.STARS)
             if shared_data.time_state == const.DAY:
@@ -61,23 +60,23 @@ class Background:
     def draw_clouds(self):
         for cloud in self.clouds:
             cloud.draw()
-    
+
     def reset(self):
         if cache.time_state == const.DAY:
-            self.moon.index = -1
-            self.moon.alpha = 0
-            self.moon.surf.set_alpha(0)
-            for star in self.stars:
-                star.alpha = 0
-                star.image.set_alpha(0)
+            alpha = 0
+            index = -1
 
-        elif cache.time_state == const.NIGHT:
-            self.moon.index = 0
-            self.moon.alpha = 255
-            self.moon.surf.set_alpha(255)
-            for star in self.stars:
-                star.alpha = 255
-                star.image.set_alpha(255)
-        
+        else:
+            alpha = 255
+            index = 0
+
+        self.moon.index = index
+        self.moon.alpha = alpha
+        self.moon.surf.set_alpha(alpha)
+
+        for star in self.stars:
+            star.alpha = alpha
+            star.image.set_alpha(alpha)
+
         for cloud, coords in zip(self.clouds, self.cloud_coords):
             cloud.rect.center = coords

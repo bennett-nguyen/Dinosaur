@@ -4,6 +4,7 @@ from src.preload.shared import shared_data
 import src.preload.constant as const
 from src.preload.comp import ImageState
 
+
 class Cloud:
     def __init__(self, image: ImageState, rect: pg.Rect, velocity: int):
         self.image = image

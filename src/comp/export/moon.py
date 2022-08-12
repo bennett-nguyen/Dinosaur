@@ -4,6 +4,7 @@ import src.preload.assets as assets
 import src.preload.constant as const
 from src.preload.shared import shared_data
 
+
 class Moon:
     def __init__(self):
         self.alpha = const.MOON_ALPHA if shared_data.time_state == const.NIGHT else 0

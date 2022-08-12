@@ -3,6 +3,7 @@ import src.preload.assets as assets
 from src.preload.shared import shared_data, cache
 from src.comp.export.sub_process import Process
 
+
 class LostScreen(Process):
     def __init__(self, _f):
         super().__init__('G A M E  O V E R', assets.Gallery.RETRY_BUTTON)

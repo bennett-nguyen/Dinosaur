@@ -7,7 +7,7 @@ from src.preload.spritesheet import Spritesheet
 @dataclass(frozen=True, init=True, eq=False, unsafe_hash=False)
 class __Font:
     FONT_MAP = {
-        "PressStart2P": "./assets/font/PressStart2P-Regular.ttf" 
+        "PressStart2P": "./assets/font/PressStart2P-Regular.ttf"
     }
 
     def get_font(self, name: str, size: int):
@@ -23,6 +23,7 @@ class __Font:
         """
         return pg.font.Font(self.FONT_MAP[name], size)
 
+
 CustomFont = __Font()
 
 _ground_ss = Spritesheet('./assets/img/spritesheets/ground/ground.png')
@@ -35,6 +36,7 @@ _star_ss = Spritesheet('./assets/img/spritesheets/star/stars.png')
 _moon_ss = Spritesheet('./assets/img/spritesheets/moon/moon.png')
 _continue_button_ss = Spritesheet('./assets/img/spritesheets/continue/continue.png')
 _retry_button_ss = Spritesheet('./assets/img/spritesheets/retry/retry.png')
+
 
 @dataclass(frozen=True, eq=False, unsafe_hash=False, init=False)
 class Gallery:
@@ -71,12 +73,13 @@ class Gallery:
     BIG_CACTUS_3 = ImageState(_cactus_ss.parse_sprite('day_big_cactus_3.png'), _cactus_ss.parse_sprite('night_big_cactus_3.png'))
     BIG_CACTUS_4 = ImageState(_cactus_ss.parse_sprite('day_big_cactus_5.png'), _cactus_ss.parse_sprite('night_big_cactus_5.png'))
     BIG_CACTUS_WITH_SMALL_CACTUS = ImageState(_cactus_ss.parse_sprite('day_big_cactus_4.png'), _cactus_ss.parse_sprite('night_big_cactus_4.png'))
-    
+
     PTERANODON_FLYING_1 = ImageState(_pteranodon_ss.parse_sprite('day_pteranodon_flying_1.png'), _pteranodon_ss.parse_sprite('night_pteranodon_flying_1.png'), True)
     PTERANODON_FLYING_2 = ImageState(_pteranodon_ss.parse_sprite('day_pteranodon_flying_2.png'), _pteranodon_ss.parse_sprite('night_pteranodon_flying_2.png'), True)
 
     CONTINUE_BUTTON = ImageState(_continue_button_ss.parse_sprite('day_continue_button.png'), _continue_button_ss.parse_sprite('night_continue_button.png'))
     RETRY_BUTTON = ImageState(_retry_button_ss.parse_sprite('day_retry_button.png'), _retry_button_ss.parse_sprite('night_retry_button.png'))
+
 
 @dataclass(frozen=True, eq=False, unsafe_hash=False, init=False)
 class Audio:

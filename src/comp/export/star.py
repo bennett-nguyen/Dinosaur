@@ -3,6 +3,7 @@ import src.preload.ds as ds
 import src.preload.constant as const
 from src.preload.shared import shared_data
 
+
 class Star:
     def __init__(self, image: pg.Surface, rect: pg.Rect):
         self.image = image
