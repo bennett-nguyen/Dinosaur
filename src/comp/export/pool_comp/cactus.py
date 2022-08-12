@@ -3,15 +3,15 @@ import src.preload.ds as ds
 import src.preload.constant as const
 from src.preload.comp import ImageState
 from src.preload.shared import shared_data
+from typing import List
 
 
 class Cactus:
-    def __init__(self, images: list[ImageState]):
+    def __init__(self, images: List[ImageState]):
         self.__init_surface(images)
         self.__draw_cactus(images)
         self.is_standalone_object = len(images) == 1
-        self.x = const.WIDTH + 100
-        self.rect = self.image.current.get_rect(midbottom=(self.x, shared_data.GROUND_Y_VALUE))
+        self.rect = self.image.current.get_rect(midbottom=(const.WIDTH + 100, shared_data.GROUND_Y_VALUE))
         self.id = const.CACTUS
 
     def move(self):
@@ -21,7 +21,7 @@ class Cactus:
         self.image.get_state(shared_data.time_state)
         ds.screen.blit(self.image.current, self.rect)
 
-    def __init_surface(self, images: list[ImageState]):
+    def __init_surface(self, images: List[ImageState]):
         width, height = 0, 0
         for image in images:
             height = max(height, image.current.get_height())
@@ -30,7 +30,7 @@ class Cactus:
         self.day_surf = pg.Surface((width, height), pg.SRCALPHA, 32)
         self.night_surf = pg.Surface((width, height), pg.SRCALPHA, 32)
 
-    def __draw_cactus(self, images: list[ImageState]):
+    def __draw_cactus(self, images: List[ImageState]):
         pos_x = 0
         for image in images:
             self.day_surf.blit(image.day_image.copy(), (pos_x, 0))
