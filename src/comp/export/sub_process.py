@@ -5,6 +5,9 @@ import src.preload.constant as const
 from src.preload.comp import ImageState
 from src.preload.shared import shared_data
 
+from typing import Tuple
+
+
 class Process:
     def __init__(self, message, button_image: ImageState):
         self.run = False
@@ -21,8 +24,8 @@ class Process:
             self.run = False
             ds.clock.tick(const.FPS)
             self.on_click_event()
-    
-    def change_state(self, color: tuple[int, int, int]):
+
+    def change_state(self, color: Tuple[int, int, int]):
         self.title = self.font.render(self.message, True, color)
         self.button.get_state(shared_data.time_state)
 
@@ -31,6 +34,6 @@ class Process:
         ds.screen.blit(self.title, self.title_rect)
 
         self.button_on_click()
-    
+
     def on_click_event(self):
         pass

@@ -18,7 +18,6 @@ class Dino:
         self.dino_blink = assets.Gallery.DINO_BLINK
         self.dino_dead = assets.Gallery.DINO_DEAD
 
-
         self.image = self.dino_idle
 
         self.fake_rect = self.image.current.get_rect(midbottom=(100, shared_data.GROUND_Y_VALUE)) # for dino transforming
@@ -83,17 +82,16 @@ class Dino:
             self._dead_animation()
             return
 
-        match self.player_state:
-            case const.IDLE:
-                if not self.blink_multitimer.static_point:
-                    self.blink_multitimer.set_static_point()
-                self._idle_animation()
-            case const.JUMP:
-                self._jump_animation()
-            case const.RUN:
-                self._running_animation()
-            case const.DUCK:
-                self._duck_animation()
+        if self.player_state == const.IDLE:
+            if not self.blink_multitimer.static_point:
+                self.blink_multitimer.set_static_point()
+            self._idle_animation()
+        elif self.player_state == const.JUMP:
+            self._jump_animation()
+        elif self.player_state == const.RUN:
+            self._running_animation()
+        elif self.player_state == const.DUCK:
+            self._duck_animation()
 
     def _idle_animation(self):
         self.blink_multitimer.set_current_time()
@@ -140,7 +138,7 @@ class Dino:
     def _dead_animation(self):
         self.image = self.dino_dead
         self.current_rect = self.rect
-    
+
     def reset(self):
         self.is_ducking = False
         self.is_jumping = False

@@ -1,19 +1,19 @@
 import os
 import json
 import pygame as pg
+from typing import Optional
 
 class Spritesheet:
-    def __init__(self, image_path: str, config_path: str | None = None, meta_data_path: str | None = None):
+    def __init__(self, image_path: str, config_path: Optional[str] = None, meta_data_path: Optional[str] = None):
         head, _ = os.path.split(image_path)
 
         actual_config_path = f'{head}/config.json' if config_path is None else config_path
         actual_meta_data_path = f'{head}/hash.json' if config_path is None else meta_data_path
-        
-        with (
-            open(actual_config_path, 'r') as config,
-            open(actual_meta_data_path, 'r') as meta
-        ):
+
+        with open(actual_config_path, 'r') as config:
             self.config = json.load(config)
+
+        with open(actual_meta_data_path, 'r') as meta:
             self.meta_data = json.load(meta)
 
         if self.config['transparent']:
@@ -21,7 +21,6 @@ class Spritesheet:
             return
 
         self.sprite_sheet = pg.image.load(image_path).convert()
-
 
     def get_sprite(self, x: int, y: int, width: int, height: int) -> pg.Surface:
         """
@@ -32,7 +31,7 @@ class Spritesheet:
         sprite.blit(self.sprite_sheet, (0, 0), (x, y, width, height))
         return sprite
 
-    def parse_sprite(self, name: str, angle: float | None = None, scale: float | None = None) -> pg.Surface:
+    def parse_sprite(self, name: str, angle: Optional[float] = None, scale: Optional[float] = None) -> pg.Surface:
         """
         (recommended)
         get sprite from the spritesheet using the name of the sprite in the metadata

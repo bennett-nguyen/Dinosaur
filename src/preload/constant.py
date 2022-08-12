@@ -3,6 +3,7 @@ Defines constants that are used throughout the game
 """
 # doing private imports btw
 from collections import namedtuple as __namedtuple
+from typing import Union
 
 __RGB = __namedtuple('RGB', ('R', 'G', 'B'))
 
@@ -31,7 +32,7 @@ MOON_ALPHA: int = 255
 CLOUDS_AMOUNT: int = 6
 STARS_AMOUNT: int = 10
 
-DAY_NIGHT_CYCLE_DELAY: float | int = 38 # in seconds
+DAY_NIGHT_CYCLE_DELAY: Union[float, int] = 38 # in seconds
 
 DINO_VELOCITY = 750
 CLOUD_VELOCITY = 50

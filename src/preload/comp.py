@@ -1,6 +1,7 @@
 import pygame as pg
 import src.preload.constant as const
-from typing import Optional
+from typing import Optional, Union, List
+
 
 class ImageState:
     def __init__(self, day_image: pg.Surface, night_image: pg.Surface, init_mask: bool = False):
@@ -13,16 +14,17 @@ class ImageState:
             self.mask = pg.mask.from_surface(self.current)
 
     def get_state(self, code):
-        match code:
-            case const.DAY:
-                self.current = self.day_image
-            case const.NIGHT:
-                self.current = self.night_image
+        if code == const.DAY:
+            self.current = self.day_image
+        if code == const.NIGHT:
+            self.current = self.night_image
+
 
 class Timer:
     '''
     Standard timer for pygame
     '''
+
     def __init__(self, length_of_timer):
         self.current_time = 0
         self.static_point = 0
@@ -35,20 +37,20 @@ class Timer:
     def set_current_time(self):
         self.current_time = pg.time.get_ticks()
 
-    def timer(self, new_length_of_timer: Optional[int | float] = None) -> bool:
+    def timer(self, new_length_of_timer: Optional[Union[int, float]] = None) -> bool:
         length_of_timer = self.length_of_timer if new_length_of_timer is None else new_length_of_timer
         return self.current_time - self.static_point > length_of_timer + self.paused_delay
 
     def reset_paused_delay(self):
         self.paused_delay = 0
-    
+
     def reset_timer(self):
         self.paused_delay = 0
         self.current_time = self.static_point = pg.time.get_ticks()
 
 
 class MultiTimer:
-    def __init__(self, length_of_timers: list[int | float]):
+    def __init__(self, length_of_timers: List[Union[int, float]]):
         self.length_of_timers = length_of_timers
         self.index = 0
         self.current_timer = self.length_of_timers[self.index]
