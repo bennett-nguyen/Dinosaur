@@ -1,11 +1,11 @@
 import pygame as pg
 from dataclasses import dataclass
-from src.preload.comp import ImageState
+from src.preload.utilities import ImageState
 from src.preload.spritesheet import Spritesheet
 
 
 @dataclass(frozen=True, init=True, eq=False, unsafe_hash=False)
-class __Font:
+class _Font:
     FONT_MAP = {
         "PressStart2P": "./assets/font/PressStart2P-Regular.ttf"
     }
@@ -24,7 +24,7 @@ class __Font:
         return pg.font.Font(self.FONT_MAP[name], size)
 
 
-CustomFont = __Font()
+CustomFont = _Font()
 
 _ground_ss = Spritesheet('./assets/img/spritesheets/ground/ground.png')
 _cactus_ss = Spritesheet('./assets/img/spritesheets/cactus/cactus.png')
