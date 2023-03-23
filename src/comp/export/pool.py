@@ -8,8 +8,8 @@ from src.comp.export.pool_comp.pteranodon import Pteranodon
 class Pool:
     '''Manage pool objects'''
 
-    def __init__(self, init_object_function: Callable[[], List[Union[Cactus, Pteranodon]]]):
-        self._objects = init_object_function()
+    def __init__(self, init_object_function: Callable[[], List[Union[Cactus, Pteranodon]]], game):
+        self._objects = init_object_function(game)
 
     def get_object(self) -> Union[Cactus, Pteranodon]:
         return self._objects.pop(self._objects.index(choice(self._objects)))
@@ -29,13 +29,9 @@ _three_big_cacti = [assets.Gallery.BIG_CACTUS_2, assets.Gallery.BIG_CACTUS_WITH_
 _cacti_images = (_one_small_cactus, _two_small_cacti, _three_small_cacti, _one_big_cactus, _two_big_cacti, _three_big_cacti)
 
 
-def _init_cactus():
-    return [Cactus(cactus_image) for cactus_image in _cacti_images]
+def _init_cactii_pool(game):
+    return [Cactus(game, cactus_image) for cactus_image in _cacti_images]
 
 
-def _init_pteranodon():
-    return [Pteranodon() for _ in range(5)]
-
-
-cacti_pool = Pool(_init_cactus)
-pteranodon_pool = Pool(_init_pteranodon)
+def _init_pteranodon_pool(game):
+    return [Pteranodon(game) for _ in range(5)]

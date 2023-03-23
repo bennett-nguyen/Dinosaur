@@ -1,40 +1,47 @@
 import pygame as pg
-import src.preload.ds as ds
 import src.preload.assets as assets
-import src.preload.constant as const
 from random import randint
-from src.preload.shared import shared_data
+from src.preload.settings import *
+
 
 class Pteranodon:
-    def __init__(self):
+    def __init__(self, game):
+        self.game = game
+
+        # Images
         self.animation = [assets.Gallery.PTERANODON_FLYING_1, assets.Gallery.PTERANODON_FLYING_2]
         self.image = self.animation[0]
-        self.is_standalone_object = True
-        self.index = 0
-        self.animation_speed = 6
-        self.id = const.PTERANODON
-        x = const.WIDTH + 200
-        y = randint(shared_data.GROUND_Y_VALUE - 100, shared_data.GROUND_Y_VALUE)
+        x = WIDTH + 200
+        y = randint(self.game.background.object_y - 100, self.game.background.object_y)
         self.rect = self.image.current.get_rect(midbottom=(x, y))
 
+        # Flag
+        self.is_standalone_object = True
+
+        # Animation
+        self.index = 0
+        self.animation_speed = 6
+
+        self.id = PTERANODON
+
     def fly(self):
-        if shared_data.allow_animation:
-            self.index += self.animation_speed * shared_data.dt
+        if not self.game.global_flag.trigger_subprocess:
+            self.index += self.animation_speed * self.game.delta_time
             if self.index >= len(self.animation):
                 self.index = 0
 
         self.image = self.animation[int(self.index)]
 
     def move(self):
-        self.rect.x -= shared_data.velocity + 2
-    
-    def redraw(self):
-        self.image.get_state(shared_data.time_state)
+        self.rect.x -= self.game.modifier.dino_velocity + 2
 
-        if self.rect.left <= const.WIDTH:
+    def redraw(self):
+        self.image.get_state(self.game.time_state)
+
+        if self.rect.left <= WIDTH:
             self.fly()
-            ds.screen.blit(self.image.current, self.rect)
+            self.game.screen.blit(self.image.current, self.rect)
 
     def change_pos(self, x: int):
         self.rect.centerx = x
-        self.rect.bottom = randint(shared_data.GROUND_Y_VALUE - 100, shared_data.GROUND_Y_VALUE)
+        self.rect.bottom = randint(self.game.background.object_y - 100, self.game.background.object_y)
